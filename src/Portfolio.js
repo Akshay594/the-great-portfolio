@@ -1,20 +1,49 @@
 import React from 'react';
-import gopalImage from './gopal.jpeg'; // Make sure the image is in the correct path
+import gopalImage from './gopal.jpeg'; // Update this path if needed
 
 const Portfolio = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white p-5">
-      <div className="max-w-5xl mx-auto">
-        {/* Header Section */}
-        <div className="text-center">
+    <div className="min-h-screen bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white">
+      {/* Header Section */}
+      <header className="bg-gray-800 py-4 px-6 sticky top-0 z-10 shadow-lg">
+        <div className="max-w-5xl mx-auto flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-blue-400">Gopal Singh</h1>
+          <nav>
+            <ul className="flex space-x-6 text-lg">
+              <li>
+                <a href="#blog" className="hover:text-blue-300 transition-colors duration-300">
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a href="#techs" className="hover:text-blue-300 transition-colors duration-300">
+                  Techs
+                </a>
+              </li>
+              <li>
+                <a href="#contact" className="hover:text-blue-300 transition-colors duration-300">
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <div className="max-w-5xl mx-auto p-5">
+        {/* Introduction Section */}
+        <div className="text-center mt-8">
           <img
-            className="w-50 h-60 rounded-full mx-auto border-4 border-blue-500"
+            className="w-40 h-40 rounded-full mx-auto border-4 border-blue-500"
             src={gopalImage}
             alt="Gopal Singh"
           />
           <h1 className="text-5xl font-bold mt-4">Gopal Singh</h1>
           <p className="text-xl text-gray-400 mt-2">CEO & Co-Founder | JaanchAI | AI Architect | NLP Specialist</p>
-          <p className="text-md text-gray-400 mt-2">Harnessing AI to revolutionize e-commerce, logistics, and retail with intelligent automation.</p>
+          <p className="text-md text-gray-400 mt-2">
+            Harnessing AI to revolutionize e-commerce, logistics, and retail with intelligent automation.
+          </p>
         </div>
 
         {/* About Section */}
@@ -27,7 +56,7 @@ const Portfolio = () => {
         </section>
 
         {/* Projects Section */}
-        <section className="mt-12">
+        <section className="mt-12" id="blog">
           <h2 className="text-4xl font-bold mb-5 text-blue-400">Projects</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-gray-800 p-6 shadow-lg rounded-lg">
@@ -46,8 +75,8 @@ const Portfolio = () => {
         </section>
 
         {/* Skills Section */}
-        <section className="mt-12">
-          <h2 className="text-4xl font-bold mb-5 text-blue-400">Skills</h2>
+        <section className="mt-12" id="techs">
+          <h2 className="text-4xl font-bold mb-5 text-blue-400">Techs</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="bg-gray-800 p-4 text-center rounded-lg shadow-lg">
               <p className="text-lg font-semibold text-gray-300">Machine Learning</p>
@@ -62,6 +91,15 @@ const Portfolio = () => {
               <p className="text-lg font-semibold text-gray-300">AI Architectures</p>
             </div>
           </div>
+        </section>
+
+        {/* Contact Section */}
+        <section className="mt-12" id="contact">
+          <h2 className="text-4xl font-bold mb-5 text-blue-400">Contact</h2>
+          <p className="text-lg text-gray-300">
+            Feel free to reach out to me for collaboration or consulting inquiries.
+          </p>
+          <p className="text-lg text-blue-400 mt-4">Email: gopal.singh@example.com</p>
         </section>
       </div>
     </div>
