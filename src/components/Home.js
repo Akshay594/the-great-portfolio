@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { Github, Linkedin, Mail, ChevronDown, ChevronUp } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import gopal from './gopal.jpeg'
+import gopal from './gopal.png';
+import backgroundImage from './bg.png'; // Image you uploaded
 
 const ProjectCard = ({ title, description, technologies }) => (
   <div className="bg-indigo-900 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-    <h3 className="text-2xl font-semibold text-indigo-300 mb-2">{title}</h3>
+    <h3 className="text-2xl font-semibold text-white mb-2">{title}</h3> {/* Updated to white */}
     <p className="text-gray-300 mb-4">{description}</p>
     <div className="flex flex-wrap gap-2">
       {technologies.map((tech, index) => (
-        <span key={index} className="bg-indigo-700 text-indigo-100 px-2 py-1 rounded-full text-sm">{tech}</span>
+        <span key={index} className="bg-indigo-700 text-white px-2 py-1 rounded-full text-sm">{tech}</span>
       ))}
     </div>
   </div>
@@ -18,8 +19,8 @@ const ProjectCard = ({ title, description, technologies }) => (
 const SkillBar = ({ skill, level }) => (
   <div className="mb-4">
     <div className="flex justify-between mb-1">
-      <span className="text-base font-medium text-indigo-300">{skill}</span>
-      <span className="text-sm font-medium text-indigo-300">{level}%</span>
+      <span className="text-base font-medium text-white">{skill}</span> {/* Updated to white */}
+      <span className="text-sm font-medium text-white">{level}%</span> {/* Updated to white */}
     </div>
     <div className="w-full bg-indigo-900 rounded-full h-2.5">
       <div className="bg-indigo-500 h-2.5 rounded-full" style={{ width: `${level}%` }}></div>
@@ -29,12 +30,10 @@ const SkillBar = ({ skill, level }) => (
 
 const TechStackSection = ({ title, techs }) => (
   <div className="mb-6">
-    <h3 className="text-xl font-semibold text-indigo-300 mb-2">{title}</h3>
+    <h3 className="text-xl font-semibold text-white mb-2">{title}</h3> {/* Updated to white */}
     <div className="flex flex-wrap gap-2">
       {techs.map((tech, index) => (
-        <span key={index} className="bg-indigo-800 text-indigo-200 px-3 py-1 rounded-full text-sm">
-          {tech}
-        </span>
+        <span key={index} className="bg-indigo-800 text-white px-3 py-1 rounded-full text-sm">{tech}</span>
       ))}
     </div>
   </div>
@@ -61,33 +60,51 @@ const Home = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-5 bg-gradient-to-b from-gray-900 via-indigo-1000 to-gray-900 min-h-screen text-white">
-      <div className="text-center mt-8">
+    <div className="max-w-6xl mx-auto p-5 min-h-screen text-white relative" style={{ backgroundColor: '#000' }}>
+      <div
+        className="relative text-center"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'top center',
+          paddingTop: '250px',  // Adjust this to lower the image and title
+          paddingBottom: '100px',  // Adjust this for more spacing below
+        }}
+      >
+        {/* Profile image section */}
         <img
           className="w-48 h-48 rounded-full mx-auto border-4 border-indigo-500 shadow-lg"
           src={gopal}
           alt="Gopal Singh"
         />
-        <h1 className="text-6xl font-bold mt-6 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">Gopal Singh</h1>
-        <p className="text-2xl text-indigo-300 mt-2">CEO & Co-Founder | JaanchAI | AI Architect | NLP Specialist</p>
-        <p className="text-lg text-gray-400 mt-2 max-w-2xl mx-auto">
+        <h1 className="text-6xl font-bold mt-6 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
+          Gopal Singh
+        </h1>
+        <p className="text-2xl text-white mt-2">CEO & Co-Founder | JaanchAI | AI Architect | NLP Specialist</p> {/* Text changed to white */}
+        <p className="text-lg text-white mt-2 max-w-2xl mx-auto"> {/* Text changed to white */}
           Revolutionizing e-commerce, logistics, and retail through AI-driven intelligent automation.
         </p>
         <div className="flex justify-center space-x-4 mt-4">
-          <a href="https://github.com/akshay594" className="text-indigo-400 hover:text-indigo-300 transition-colors"><Github size={28} /></a>
-          <a href="https://www.linkedin.com/in/theunblunt/" className="text-indigo-400 hover:text-indigo-300 transition-colors"><Linkedin size={28} /></a>
-          <a 
-          href="mailto:gopal@jaanch.ai"
-          className="text-indigo-400 hover:text-indigo-300 transition-colors"><Mail size={28} /></a>
+          <a href="https://github.com/akshay594" className="text-indigo-400 hover:text-indigo-300 transition-colors">
+            <Github size={28} />
+          </a>
+          <a href="https://www.linkedin.com/in/theunblunt/" className="text-indigo-400 hover:text-indigo-300 transition-colors">
+            <Linkedin size={28} />
+          </a>
+          <a href="mailto:gopal@jaanch.ai" className="text-indigo-400 hover:text-indigo-300 transition-colors">
+            <Mail size={28} />
+          </a>
         </div>
       </div>
 
-      <section className="mt-16 bg-indigo-950 p-8 rounded-lg shadow-xl">
-        <h2 className="text-4xl font-bold mb-6 text-indigo-400">About Me</h2>
-        <p className="text-lg text-gray-300 leading-relaxed">
+      {/* Black background for inner sections */}
+      <section className="mt-16 bg-black p-8 rounded-lg shadow-xl">
+        <h2 className="text-4xl font-bold mb-6 text-white">About Me</h2> {/* Updated to white */}
+        <p className="text-lg text-white leading-relaxed"> {/* Updated to white */}
           As an innovative AI architect, I specialize in crafting scalable solutions that address complex business challenges. My expertise in machine learning, natural language processing, and data analytics has been the cornerstone in co-founding <span className="text-indigo-400 font-semibold">JaanchAI</span>, where we're reshaping the e-commerce landscape through AI-driven insights.
         </p>
-        <p className="text-lg text-gray-300 mt-4 leading-relaxed">
+        <p className="text-lg text-white mt-4 leading-relaxed"> {/* Updated to white */}
           At JaanchAI, we empower businesses with cutting-edge forecasting, pricing strategies, and competitor analysis. My passion lies in leveraging state-of-the-art AI technologies to drive innovation, optimize operations, and enhance decision-making across various sectors.
         </p>
         <button 
@@ -98,7 +115,7 @@ const Home = () => {
           {showMore ? <ChevronUp className="ml-1" /> : <ChevronDown className="ml-1" />}
         </button>
         {showMore && (
-          <div className="mt-4 text-gray-300">
+          <div className="mt-4 text-white"> {/* Updated to white */}
             <p>My journey in tech has been marked by significant milestones:</p>
             <ul className="list-disc list-inside mt-2 space-y-2">
               <li>Led data science initiatives at LetsUpgrade.in, educating aspiring data scientists.</li>
@@ -110,8 +127,8 @@ const Home = () => {
         )}
       </section>
 
-      <section className="mt-16 bg-indigo-950 p-8 rounded-lg shadow-xl">
-        <h2 className="text-4xl font-bold mb-6 text-indigo-400">Key Expertise</h2>
+      <section className="mt-16 bg-black p-8 rounded-lg shadow-xl">
+        <h2 className="text-4xl font-bold mb-6 text-white">Key Expertise</h2> {/* Updated to white */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <SkillBar skill="AI & Machine Learning" level={95} />
@@ -120,7 +137,7 @@ const Home = () => {
             <SkillBar skill="Cloud & DevOps" level={80} />
           </div>
           <div>
-            <h3 className="text-2xl font-semibold text-indigo-300 mb-4">Project Impact</h3>
+            <h3 className="text-2xl font-semibold text-white mb-4">Project Impact</h3> {/* Updated to white */}
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={projectData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#4B5563" />
@@ -134,8 +151,8 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="mt-16 bg-indigo-950 p-8 rounded-lg shadow-xl">
-        <h2 className="text-4xl font-bold mb-6 text-indigo-400">Tech Stack</h2>
+      <section className="mt-16 bg-black p-8 rounded-lg shadow-xl">
+        <h2 className="text-4xl font-bold mb-6 text-white">Tech Stack</h2> {/* Updated to white */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <TechStackSection title="Programming Languages" techs={techStacks.languages} />
           <TechStackSection title="Backend Frameworks" techs={techStacks.backend} />
@@ -148,7 +165,7 @@ const Home = () => {
       </section>
 
       <section className="mt-16">
-        <h2 className="text-4xl font-bold mb-6 text-indigo-400">Featured Projects</h2>
+        <h2 className="text-4xl font-bold mb-6 text-white">Featured Projects</h2> {/* Updated to white */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <ProjectCard 
             title="JaanchGPT" 
