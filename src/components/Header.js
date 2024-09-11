@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
@@ -26,10 +24,11 @@ const Header = () => {
   const rightNavItems = navItems.slice(Math.ceil(navItems.length / 2));
 
   return (
-    <header className={`py-8 px-12 fixed top-0 w-full z-10 transition-all duration-300 ${
+    <header className={`py-8 px-6 md:px-12 fixed top-0 w-full z-10 transition-all duration-300 ${
       isScrolled ? 'bg-gray-900 bg-opacity-90 shadow-lg' : 'bg-transparent'
     }`}>
       <div className="max-w-screen-xl mx-auto flex items-center justify-between relative">
+        {/* Navigation Menu */}
         <nav className="hidden md:block flex-1">
           <ul className="flex justify-start space-x-16 text-lg">
             {leftNavItems.map((item) => (
@@ -49,11 +48,15 @@ const Header = () => {
             ))}
           </ul>
         </nav>
-        <h1 className="text-5xl font-bold text-center absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+
+        {/* Center Title */}
+        <h1 className="text-4xl md:text-5xl font-bold text-center absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap">
           <Link to="/" className="font-serif text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-300 hover:from-indigo-200 hover:to-purple-200 transition-all duration-300 hover:scale-105">
             Gopal Singh
           </Link>
         </h1>
+
+        {/* Right-side Navigation */}
         <nav className="hidden md:block flex-1">
           <ul className="flex justify-end space-x-24 text-lg">
             {rightNavItems.map((item) => (
@@ -73,33 +76,7 @@ const Header = () => {
             ))}
           </ul>
         </nav>
-        <button 
-          className="md:hidden text-indigo-300 hover:text-indigo-200 transition-colors duration-300 absolute right-0"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-        >
-          {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
       </div>
-      <nav className={`md:hidden mt-6 overflow-hidden transition-all duration-300 ${isMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'}`}>
-        <ul className="flex flex-col space-y-4 text-lg">
-          {navItems.map((item) => (
-            <li key={item.name}>
-              <Link 
-                to={item.path} 
-                className={`block px-6 py-3 rounded transition-all duration-300 ${
-                  location.pathname === item.path
-                    ? 'bg-indigo-700 text-white font-semibold'
-                    : 'text-gray-300 hover:bg-indigo-600 hover:text-white'
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
     </header>
   );
 };
