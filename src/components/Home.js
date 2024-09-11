@@ -78,9 +78,9 @@ const Home = () => {
           src={gopal}
           alt="Gopal Singh"
         />
-        <h1 className="text-6xl font-bold mt-6 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
+        {/* <h1 className="text-6xl font-bold mt-6 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
           Gopal Singh
-        </h1>
+        </h1> */}
         <p className="text-2xl text-white mt-2">CEO & Co-Founder | JaanchAI | AI Architect | NLP Specialist</p> {/* Text changed to white */}
         <p className="text-lg text-white mt-2 max-w-2xl mx-auto"> {/* Text changed to white */}
           Revolutionizing e-commerce, logistics, and retail through AI-driven intelligent automation.
