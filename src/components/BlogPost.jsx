@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Clock, Calendar, User, Quote } from 'lucide-react';
+import { ArrowLeft, Clock, Calendar, User } from 'lucide-react';
 import Header from './Header';
 import { Helmet } from 'react-helmet';
 
@@ -97,7 +97,7 @@ const BlogPost = () => {
               </p>
               
               <div className="my-10">
-                <Suspense fallback={<div>Loading graph...</div>}>
+                <Suspense fallback={<div className="text-center text-indigo-400">Loading graph...</div>}>
                   <LazyComparisonGraph />
                 </Suspense>
                 <p className="text-sm text-gray-400 mt-2">
@@ -106,11 +106,11 @@ const BlogPost = () => {
               </div>
 
               <div className="my-10">
-                <Suspense fallback={<div>Loading infographic...</div>}>
+                <Suspense fallback={<div className="text-center text-indigo-400">Loading infographic...</div>}>
                   <LazyPricingFlowInfographic />
                 </Suspense>
                 <p className="text-sm text-gray-400 mt-2">
-                  Fig 2: The flow of AI-powered pricing: data > analysis > decision > action
+                  Fig 2: The flow of AI-powered pricing: data {'>'} analysis{'>'} decision {'>'} action
                 </p>
               </div>
             </section>
@@ -143,8 +143,15 @@ const BlogPost = () => {
           </article>
 
           <div className="mt-16 border-t border-gray-700 pt-8">
-            <Link to="/blog" className="inline-flex items-center text-indigo-400 hover
-  transition-colors duration-300"> <ArrowLeft className="mr-2" size={20} /> Back to Blog 
-        </Link> </div> </div> </main> </div> ); };
+            <Link to="/blog" className="inline-flex items-center text-indigo-400 hover:text-indigo-300 transition-colors duration-300">
+              <ArrowLeft className="mr-2" size={20} />
+              Back to Blog
+            </Link>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+};
 
 export default BlogPost;
