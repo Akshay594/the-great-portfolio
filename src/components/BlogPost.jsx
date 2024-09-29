@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Clock, Calendar, User } from 'lucide-react';
 import Header from './Header';
@@ -10,6 +10,72 @@ const LazyPricingFlowInfographic = lazy(() => import('./PricingFlowInfographic')
 const SectionHeader = ({ title }) => (
   <h2 className="text-4xl font-bold text-indigo-300 mb-6">{title}</h2>
 );
+
+const PricingPlayground = () => {
+  const [cost, setCost] = useState(100);
+  const [competitorPrice, setCompetitorPrice] = useState(120);
+  const [demand, setDemand] = useState(80);
+  const [aiSuggestedPrice, setAiSuggestedPrice] = useState(null);
+
+  const calculatePrice = () => {
+    const price = cost + (competitorPrice - cost) * (demand / 100);
+    setAiSuggestedPrice(price.toFixed(2));
+  };
+
+  return (
+    <div className="bg-gray-800 p-8 rounded-lg text-gray-300 mt-12 shadow-lg shadow-indigo-700/50">
+      <h3 className="text-2xl font-bold text-indigo-400 mb-4">AI-Powered Pricing Playground</h3>
+      <p className="mb-6">
+        Enter your product details below and see how an AI-driven pricing model dynamically adjusts based on your inputs.
+      </p>
+      
+      <div className="flex flex-col space-y-4">
+        <label className="flex items-center justify-between">
+          <span className="w-40 text-indigo-200">Cost Price ($):</span>
+          <input
+            type="number"
+            className="px-4 py-2 bg-gray-900 rounded-lg text-white w-32"
+            value={cost}
+            onChange={(e) => setCost(e.target.value)}
+          />
+        </label>
+
+        <label className="flex items-center justify-between">
+          <span className="w-40 text-indigo-200">Competitor Price ($):</span>
+          <input
+            type="number"
+            className="px-4 py-2 bg-gray-900 rounded-lg text-white w-32"
+            value={competitorPrice}
+            onChange={(e) => setCompetitorPrice(e.target.value)}
+          />
+        </label>
+
+        <label className="flex items-center justify-between">
+          <span className="w-40 text-indigo-200">Demand (%):</span>
+          <input
+            type="number"
+            className="px-4 py-2 bg-gray-900 rounded-lg text-white w-32"
+            value={demand}
+            onChange={(e) => setDemand(e.target.value)}
+          />
+        </label>
+
+        <button
+          onClick={calculatePrice}
+          className="bg-indigo-500 text-white px-6 py-2 rounded-lg hover:bg-indigo-600 transition-all duration-300 hover:scale-105 transform mt-4"
+        >
+          Calculate AI-Suggested Price
+        </button>
+
+        {aiSuggestedPrice && (
+          <div className="mt-6 text-xl text-indigo-300">
+            <strong>AI Suggested Price: </strong>${aiSuggestedPrice}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const BlogPost = () => {
   return (
@@ -64,36 +130,29 @@ const BlogPost = () => {
             </section>
 
             <section>
-              <SectionHeader title="Real-World Pricing Challenges" />
-              <h3 className="text-2xl font-semibold text-indigo-200 mb-4">E-commerce: Amazon's Pricing Predicament</h3>
-              <p className="leading-relaxed">
-                Despite its technological sophistication, Amazon faces significant challenges in pricing its vast inventory. With millions of products and countless competitors, manually adjusting prices is unfeasible. According to a report by Profitero, Amazon changes prices on about 50 million products every day. 
-              </p>
-              <p className="leading-relaxed">
-                In 2019, a pricing algorithm glitch resulted in thousands of items being listed for just $94.50, regardless of their actual value. The glitch led to an estimated loss of millions, underscoring the need for robust AI systems that can prevent such costly errors. AI models with robust monitoring capabilities could have detected and adjusted these discrepancies instantly, preventing millions in losses.
-              </p>
-
-              <h3 className="text-2xl font-semibold text-indigo-200 mb-4 mt-10">Retail: Walmart's Balancing Act</h3>
-              <p className="leading-relaxed">
-                Walmart, known for its "Everyday Low Prices" strategy, constantly struggles to balance competitive pricing with profitability across its vast network of stores. The retail giant must consider not only online competitors but also local market conditions for each of its locations. 
-              </p>
-              <p className="leading-relaxed">
-                A study by Bain & Company found that implementing dynamic pricing could increase a retailer's margins by 2 to 5 percentage points. In a specific case study, Walmart's use of AI-driven dynamic pricing in its online marketplace led to a 10-15% increase in sales for participating sellers. By leveraging AI, Walmart could offer location-specific pricing across stores and online platforms, dynamically adjusting to local competitor prices while maintaining profitability.
-              </p>
-
-              <h3 className="text-2xl font-semibold text-indigo-200 mb-4 mt-10">Logistics: UPS and the Complexity of Dynamic Pricing</h3>
-              <p className="leading-relaxed">
-                UPS faces the complex task of pricing shipments based on numerous variables including distance, weight, fuel costs, and delivery speed. The company has historically relied on annual rate increases and fuel surcharges, but this approach lacks the agility to respond to short-term market fluctuations or capitalize on periods of excess capacity. 
-              </p>
-              <p className="leading-relaxed">
-                UPS's challenge lies in integrating real-time data on fuel prices, traffic conditions, and package volumes to optimize pricing dynamically. This is an area where AI-driven systems could provide significant advantages, offering the ability to adjust prices in real-time based on current conditions and demand.
-              </p>
+              <SectionHeader title="AI-Driven Pricing Playground" />
+              <PricingPlayground />
             </section>
 
             <section>
               <SectionHeader title="AI-Driven Solutions: The Power of Forecasting" />
               <p className="leading-relaxed">
-                These challenges can be addressed through AI-powered forecasting, which can process real-time data and optimize pricing dynamically. By harnessing the predictive capabilities of AI, businesses can transform their pricing strategies from reactive to proactive, optimizing revenue and staying ahead of market trends.
+                Machine learning (ML) plays a critical role in modern AI-driven pricing strategies. Here are some of the models and techniques commonly used to predict optimal pricing decisions:
+              </p>
+
+              <h3 className="text-2xl font-semibold text-indigo-200 mb-4">1. ARIMA (AutoRegressive Integrated Moving Average)</h3>
+              <p className="leading-relaxed">
+                ARIMA is a popular statistical model used to analyze time series data, like pricing trends. It’s particularly good at forecasting based on historical data. Think of it as a way to predict future prices by examining patterns from the past.
+              </p>
+
+              <h3 className="text-2xl font-semibold text-indigo-200 mb-4">2. LSTM (Long Short-Term Memory Networks)</h3>
+              <p className="leading-relaxed">
+                LSTM is a type of neural network used to capture complex patterns in data, especially when information changes over time. In pricing, LSTM helps by analyzing long-term trends, such as how demand shifts over time and how seasonal patterns affect pricing. It’s like a highly advanced pattern detector that adjusts prices in real-time.
+              </p>
+
+              <h3 className="text-2xl font-semibold text-indigo-200 mb-4">3. Reinforcement Learning</h3>
+              <p className="leading-relaxed">
+                Reinforcement learning is a branch of machine learning where the AI learns to make decisions by receiving feedback (rewards or penalties) based on its actions. In pricing, this model can continuously adapt and learn the best prices based on real-time outcomes—like a system that gets smarter with every sale.
               </p>
               
               <div className="my-10">
