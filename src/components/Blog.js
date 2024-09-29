@@ -8,15 +8,15 @@ const blogPosts = [
     excerpt: "Explore how AI is revolutionizing pricing strategies, offering solutions to real-world challenges that companies face daily...",
     date: "September 29, 2024",
     author: "Gopal Singh",
-    readTime: "15 min read",
+    readTime: "5 min read",
   },
   {
     slug: "ai-personalization-ecommerce",
     title: "AI and Personalization: Revolutionizing Customer Experience in E-commerce",
     excerpt: "In today's e-commerce landscape, customers expect more than just products. Learn how AI is delivering personalized shopping experiences...",
-    date: "October 5, 2024",
+    date: "September 29, 2024",
     author: "Gopal Singh",
-    readTime: "12 min read",
+    readTime: "3 min read",
   },
   // Add more blog posts here
 ];

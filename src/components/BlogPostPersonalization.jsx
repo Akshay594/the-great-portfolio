@@ -31,11 +31,11 @@ const BlogPostPersonalization = () => {
               <div className="flex flex-wrap items-center text-gray-400 space-x-6">
                 <div className="flex items-center">
                   <Calendar className="mr-2" size={16} />
-                  <span>October 1, 2024</span>
+                  <span>September 29, 2024</span>
                 </div>
                 <div className="flex items-center">
                   <Clock className="mr-2" size={16} />
-                  <span>12 min read</span>
+                  <span>3 min read</span>
                 </div>
                 <div className="flex items-center">
                   <User className="mr-2" size={16} />
