@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import AdminCMS from './admin-cms/AdminCMS';
-import Login from './components/Login';
 import Header from './components/Header';
 import Home from './components/Home';
 import Blog from './components/Blog';
 import BlogPost from './components/BlogPost';
 
 function App() {
-  const [token, setToken] = useState(null);
 
   return (
     <Router>
@@ -18,7 +15,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/admin" element={token ? <AdminCMS token={token} /> : <Login setToken={setToken} />} />
         </Routes>
       </div>
     </Router>
