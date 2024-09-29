@@ -9,7 +9,14 @@ const blogPosts = [
     date: "September 29, 2024",
     author: "Gopal Singh",
     readTime: "15 min read",
-    image: "/path/to/blog-image-1.jpg" // Replace with actual image path
+  },
+  {
+    slug: "ai-personalization-ecommerce",
+    title: "AI and Personalization: Revolutionizing Customer Experience in E-commerce",
+    excerpt: "In today's e-commerce landscape, customers expect more than just products. Learn how AI is delivering personalized shopping experiences...",
+    date: "October 5, 2024",
+    author: "Gopal Singh",
+    readTime: "12 min read",
   },
   // Add more blog posts here
 ];

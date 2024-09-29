@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Blog from './components/Blog';
 import BlogPost from './components/BlogPost';
+import BlogPostPersonalization from './components/BlogPostPersonalization';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/blog/ai-personalization-ecommerce" element={<BlogPostPersonalization />} />
         </Routes>
       </div>
     </Router>
