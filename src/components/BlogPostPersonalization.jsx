@@ -1,41 +1,34 @@
-import React, { lazy, Suspense } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import { ArrowLeft, Clock, Calendar, User } from 'lucide-react';
-import Header from './Header';
-import { Helmet } from 'react-helmet';
-
-const LazyRecommendationSimulator = lazy(() => import('./RecommendationSimulator'));
+import AIPersonalizationPlayground from './AIPersonalizationPlayground';
+import { Link } from 'react-router-dom';
 
 const SectionHeader = ({ title }) => (
-  <h2 className="text-4xl font-bold text-indigo-300 mb-6">{title}</h2>
+  <h2 className="text-3xl font-bold text-indigo-300 mb-4">{title}</h2>
 );
 
 const BlogPostPersonalization = () => {
   return (
-    <div className="bg-gray-900 min-h-screen text-gray-300">
-      <Helmet>
-        <title>AI and Personalization: Revolutionizing Customer Experience in E-commerce</title>
-        <meta name="description" content="Discover how AI is revolutionizing e-commerce with personalized customer experiences." />
-      </Helmet>
-      <Header />
-      <main className="pt-28 pb-20">
-        <div className="max-w-5xl mx-auto px-6 lg:px-10">
-          <Link to="/blog" className="inline-flex items-center text-indigo-400 hover:text-indigo-300 transition-colors duration-300 mb-10">
+    <div className="bg-gray-900 min-h-screen text-gray-300 mt-24">
+      <main className="pt-10 pb-20">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+        <Link to="/blog" className="inline-flex items-center text-indigo-400 hover:text-indigo-300 transition-colors duration-300 mb-10">
             <ArrowLeft className="mr-2" size={20} />
             Back to Blog
           </Link>
           
-          <article className="prose prose-lg prose-invert prose-indigo max-w-none space-y-14">
+          
+          <article className="space-y-10">
             <header className="mb-12">
-              <h1 className="text-5xl font-extrabold text-indigo-300 mb-4">AI and Personalization: Revolutionizing Customer Experience in E-commerce</h1>
+              <h1 className="text-4xl font-extrabold text-indigo-300 mb-4">AI and Personalization: Revolutionizing Customer Experience in E-commerce</h1>
               <div className="flex flex-wrap items-center text-gray-400 space-x-6">
                 <div className="flex items-center">
                   <Calendar className="mr-2" size={16} />
-                  <span>September 29, 2024</span>
+                  <span>October 1, 2024</span>
                 </div>
                 <div className="flex items-center">
                   <Clock className="mr-2" size={16} />
-                  <span>3 min read</span>
+                  <span>5 min read</span>
                 </div>
                 <div className="flex items-center">
                   <User className="mr-2" size={16} />
@@ -44,69 +37,60 @@ const BlogPostPersonalization = () => {
               </div>
             </header>
 
-            <section>
+            <section className="bg-gray-800 p-6 rounded-lg">
               <p className="text-xl text-indigo-200 font-semibold leading-relaxed">
-                In the fast-paced world of e-commerce, staying ahead of the competition means embracing cutting-edge technologies like AI and personalization. Learn how they’re transforming customer experiences and boosting sales.
+                In the fast-paced world of e-commerce, staying ahead of the competition means embracing cutting-edge technologies like AI and personalization. Learn how they're transforming customer experiences and boosting sales.
               </p>
             </section>
 
             <section>
-              <SectionHeader title="Understanding AI and Personalization" />
-              <p className="leading-relaxed">
-                AI in e-commerce uses machine learning models to track customer behavior, preferences, and purchase history. The more data AI processes, the better it becomes at predicting customer preferences and delivering personalized shopping experiences.
+              <SectionHeader title="Understanding AI and Personalization in E-commerce" />
+              <p className="mb-4">
+                AI has drastically transformed how businesses interact with customers. In e-commerce, AI models analyze customer data—browsing habits, purchase history, and even real-time behavior—to deliver personalized experiences. This level of personalization ensures that every shopper feels as if the entire store is tailored just for them.
+              </p>
+              <p className="mb-4">
+                Imagine AI as your virtual shopping assistant, continuously learning about your preferences with each interaction. This allows businesses to make precise product recommendations, predict trends, and adjust prices in real time based on market demand.
               </p>
             </section>
 
             <section>
-              <SectionHeader title="How AI Drives Personalization" />
-              <ul className="list-disc ml-6 leading-relaxed">
-                <li>Product Recommendations: AI suggests products based on browsing history and purchase patterns.</li>
-                <li>Dynamic Pricing: AI adjusts prices in real-time based on demand and customer behavior.</li>
-                <li>Personalized Search Results: AI tailors search results to user preferences.</li>
-                <li>Chatbots and Virtual Assistants: AI chatbots deliver personalized customer service.</li>
-                <li>Email Marketing: AI segments audiences and personalizes email content for better engagement.</li>
+              <SectionHeader title="Interactive AI Personalization Demo" />
+              <p className="mb-6">
+                Experience the power of AI personalization firsthand with our interactive demo below. Search for products, filter by category and price, and 'like' items to see how the AI adapts its recommendations based on your preferences.
+              </p>
+              <AIPersonalizationPlayground />
+            </section>
+
+            <section>
+              <SectionHeader title="How AI Enhances Personalization" />
+              <ul className="list-disc ml-6 space-y-2">
+                <li><strong className="text-indigo-300">Product Recommendations</strong>: AI suggests products based on browsing history and past purchases.</li>
+                <li><strong className="text-indigo-300">Dynamic Pricing</strong>: AI adjusts prices in real-time by analyzing demand and competitor pricing.</li>
+                <li><strong className="text-indigo-300">Personalized Search Results</strong>: AI customizes search results to align with customer preferences.</li>
+                <li><strong className="text-indigo-300">Chatbots and Virtual Assistants</strong>: AI chatbots offer 24/7 personalized customer support.</li>
+                <li><strong className="text-indigo-300">Email Marketing</strong>: AI optimizes email marketing by segmenting audiences and personalizing content.</li>
               </ul>
             </section>
 
-            <section>
-              <SectionHeader title="AI Product Recommendation System" />
-              <p className="leading-relaxed">
-                Choose your categories to see personalized product recommendations powered by AI:
-              </p>
-              <Suspense fallback={<div className="text-indigo-400">Loading recommendation system...</div>}>
-                <LazyRecommendationSimulator />
-              </Suspense>
-            </section>
-
-            <section>
-              <SectionHeader title="Real-World Success: Nike’s AI-Powered Shopping Experience" />
-              <p className="leading-relaxed">
-                Nike uses AI to personalize product recommendations by analyzing customer data like past purchases and fitness activities. This system increased conversion rates by 20% and helped optimize inventory management.
-              </p>
-            </section>
-
-            <section className="bg-indigo-900 p-10 rounded-lg mt-16">
+            <section className="bg-indigo-900 p-8 rounded-lg">
               <SectionHeader title="Revolutionize Your E-commerce Experience" />
-              <p className="text-lg mb-6 leading-relaxed">
+              <p className="text-lg mb-6">
                 Interested in seeing how AI-powered personalization can transform your business? Contact us today for a free consultation.
               </p>
-              <a 
-                href="https://www.jaanch.ai/talk-to-expert"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-indigo-500 text-white px-6 py-3 rounded-lg hover:bg-indigo-600 transition-all duration-300 hover:scale-105 transform"
-                aria-label="Register for Demo"
-              >
+              <button className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded">
                 Register for Demo
-              </a>
+              </button>
             </section>
           </article>
 
-          <div className="mt-16 border-t border-gray-700 pt-8">
-            <Link to="/blog" className="inline-flex items-center text-indigo-400 hover:text-indigo-300 transition-colors duration-300">
+          <div className="mt-10 pt-6 border-t border-gray-700">
+            <button className="text-indigo-400 hover:text-indigo-300 flex items-center bg-transparent border-none cursor-pointer">
+              <Link to="/blog" className="inline-flex items-center text-indigo-400 hover:text-indigo-300 transition-colors duration-300 mb-10">
               <ArrowLeft className="mr-2" size={20} />
               Back to Blog
             </Link>
+            
+            </button>
           </div>
         </div>
       </main>

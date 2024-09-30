@@ -1,8 +1,9 @@
-import React, { lazy, Suspense, useState } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Clock, Calendar, User } from 'lucide-react';
 import Header from './Header';
 import { Helmet } from 'react-helmet';
+import PricingPlayground from './PricingPlayground'; // Import the enhanced playground component
 
 const LazyComparisonGraph = lazy(() => import('./ComparisonGraph'));
 const LazyPricingFlowInfographic = lazy(() => import('./PricingFlowInfographic'));
@@ -10,72 +11,6 @@ const LazyPricingFlowInfographic = lazy(() => import('./PricingFlowInfographic')
 const SectionHeader = ({ title }) => (
   <h2 className="text-4xl font-bold text-indigo-300 mb-6">{title}</h2>
 );
-
-const PricingPlayground = () => {
-  const [cost, setCost] = useState(100);
-  const [competitorPrice, setCompetitorPrice] = useState(120);
-  const [demand, setDemand] = useState(80);
-  const [aiSuggestedPrice, setAiSuggestedPrice] = useState(null);
-
-  const calculatePrice = () => {
-    const price = cost + (competitorPrice - cost) * (demand / 100);
-    setAiSuggestedPrice(price.toFixed(2));
-  };
-
-  return (
-    <div className="bg-gray-800 p-8 rounded-lg text-gray-300 mt-12 shadow-lg shadow-indigo-700/50">
-      <h3 className="text-2xl font-bold text-indigo-400 mb-4">AI-Powered Pricing Playground</h3>
-      <p className="mb-6">
-        Enter your product details below and see how an AI-driven pricing model dynamically adjusts based on your inputs.
-      </p>
-      
-      <div className="flex flex-col space-y-4">
-        <label className="flex items-center justify-between">
-          <span className="w-40 text-indigo-200">Cost Price ($):</span>
-          <input
-            type="number"
-            className="px-4 py-2 bg-gray-900 rounded-lg text-white w-32"
-            value={cost}
-            onChange={(e) => setCost(e.target.value)}
-          />
-        </label>
-
-        <label className="flex items-center justify-between">
-          <span className="w-40 text-indigo-200">Competitor Price ($):</span>
-          <input
-            type="number"
-            className="px-4 py-2 bg-gray-900 rounded-lg text-white w-32"
-            value={competitorPrice}
-            onChange={(e) => setCompetitorPrice(e.target.value)}
-          />
-        </label>
-
-        <label className="flex items-center justify-between">
-          <span className="w-40 text-indigo-200">Demand (%):</span>
-          <input
-            type="number"
-            className="px-4 py-2 bg-gray-900 rounded-lg text-white w-32"
-            value={demand}
-            onChange={(e) => setDemand(e.target.value)}
-          />
-        </label>
-
-        <button
-          onClick={calculatePrice}
-          className="bg-indigo-500 text-white px-6 py-2 rounded-lg hover:bg-indigo-600 transition-all duration-300 hover:scale-105 transform mt-4"
-        >
-          Calculate AI-Suggested Price
-        </button>
-
-        {aiSuggestedPrice && (
-          <div className="mt-6 text-xl text-indigo-300">
-            <strong>AI Suggested Price: </strong>${aiSuggestedPrice}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
 
 const BlogPost = () => {
   return (
