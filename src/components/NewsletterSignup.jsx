@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { X, Mail, Zap, TrendingUp, UserPlus, Gift } from 'lucide-react';
 
-const FloatingNewsletterSignup = () => {
+const NewsletterSignup = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [visible, setVisible] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    // Show on initial load
     const timer = setTimeout(() => setVisible(true), 3000);
 
-    // Show when scrolled to bottom
     const handleScroll = () => {
       if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
         setVisible(true);
@@ -27,41 +26,42 @@ const FloatingNewsletterSignup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     try {
-      // Simulate sending email to your inbox (Replace this with a backend call)
-      await fetch('https://formsubmit.co/gopalsinghpanwar411@gmail.com', {
+      const response = await fetch('https://formsubmit.co/ajax/gopalsinghpanwar411@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({
+          email: email,
+          _subject: "New Newsletter Subscription"
+        })
       });
 
-      setMessage('🎉 Welcome aboard! Your journey into AI mastery begins now.');
-      setEmail('');
+      const result = await response.json();
+
+      if (result.success) {
+        setMessage('🎉 Welcome aboard! Your journey into AI mastery begins now.');
+        setEmail('');
+      } else {
+        throw new Error('Submission failed');
+      }
     } catch (error) {
-      setMessage('Oops! A glitch in the matrix. Please try again.');
+      console.error('Submission error:', error);
+      setMessage('Oops! Something went wrong. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const closeForm = () => {
     setVisible(false);
-    // Set a cookie or localStorage item to remember the user closed the form
-    localStorage.setItem('newsletterClosed', Date.now().toString());
   };
 
-  // Check if the user has recently closed the form
-  const hasRecentlyClosed = () => {
-    const closedTimestamp = localStorage.getItem('newsletterClosed');
-    if (closedTimestamp) {
-      const hoursSinceClosed = (Date.now() - parseInt(closedTimestamp)) / (1000 * 60 * 60);
-      return hoursSinceClosed < 1; // Don't show if closed within the last hour
-    }
-    return false;
-  };
-
-  if (!visible || hasRecentlyClosed()) return null;
+  if (!visible) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
@@ -99,9 +99,14 @@ const FloatingNewsletterSignup = () => {
           <button
             type="submit"
             className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 flex items-center justify-center"
+            disabled={isSubmitting}
           >
-            <span>Unlock AI Wisdom</span>
-            <Zap className="ml-2" size={20} />
+            {isSubmitting ? 'Submitting...' : (
+              <>
+                <span>Unlock AI Wisdom</span>
+                <Zap className="ml-2" size={20} />
+              </>
+            )}
           </button>
         </form>
 
@@ -138,4 +143,4 @@ const FloatingNewsletterSignup = () => {
   );
 };
 
-export default FloatingNewsletterSignup;
+export default NewsletterSignup;
