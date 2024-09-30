@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Github, Linkedin, Mail, ChevronDown, ChevronUp } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import gopal from './gopal.png';
+import gopal from './gym.jpeg';
 import backgroundImage from './bg.png'; // Image you uploaded
 
 const ProjectCard = ({ title, description, technologies }) => (
@@ -74,10 +74,11 @@ const Home = () => {
       >
         {/* Profile image section */}
         <img
-          className="w-48 h-48 rounded-full mx-auto border-4 border-indigo-500 shadow-lg"
-          src={gopal}
-          alt="Gopal Singh"
-        />
+        className="w-40 h-40 rounded-full mx-auto border-4 border-white-500 shadow-lg object-cover" // Added object-cover
+        src={gopal}
+        alt="Gopal Singh"
+      />
+
         <p className="text-2xl text-white mt-2">CEO & Co-Founder | JaanchAI | AI Architect | NLP Specialist</p>
         <p className="text-lg text-white mt-2 max-w-2xl mx-auto">
           Revolutionizing e-commerce, logistics, and retail through AI-driven intelligent automation.
