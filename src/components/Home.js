@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Github, Linkedin, Mail, ChevronDown, ChevronUp } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import gopal from './gym.jpeg';
+import gopal from './gopal.png';
 import backgroundImage from './bg.png'; // Image you uploaded
 
 const ProjectCard = ({ title, description, technologies }) => (
