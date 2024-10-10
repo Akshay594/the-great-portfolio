@@ -5,7 +5,6 @@ import Home from './components/Home';
 import Blog from './components/Blog';
 import BlogPost from './components/BlogPost';
 import BlogPostPersonalization from './components/BlogPostPersonalization';
-import NewsletterSignup from './components/NewsletterSignup';
 
 function App() {
 
@@ -19,7 +18,6 @@ function App() {
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/blog/ai-personalization-ecommerce" element={<BlogPostPersonalization />} />
         </Routes>
-        <NewsletterSignup />
       </div>
     </Router>
   );
