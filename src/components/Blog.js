@@ -25,12 +25,6 @@ const blogPosts = [
   // Add more blog posts here
 ];
 
-const fadeInUp = {
-  initial: { y: 60, opacity: 0 },
-  animate: { y: 0, opacity: 1 },
-  transition: { duration: 0.6 }
-};
-
 const staggerContainer = {
   hidden: { opacity: 0 },
   show: {
