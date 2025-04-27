@@ -1,46 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Github, Linkedin, Mail, ChevronDown, ChevronUp } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { motion } from 'framer-motion';
 import gopal from './gopal.png';
-import backgroundImage from './bg.png'; // Image you uploaded
 
-const ProjectCard = ({ title, description, technologies }) => (
-  <div className="bg-indigo-900 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-    <h3 className="text-2xl font-semibold text-white mb-2">{title}</h3>
-    <p className="text-gray-300 mb-4">{description}</p>
-    <div className="flex flex-wrap gap-2">
-      {technologies.map((tech, index) => (
-        <span key={index} className="bg-indigo-700 text-white px-2 py-1 rounded-full text-sm">{tech}</span>
-      ))}
-    </div>
-  </div>
-);
 
-const SkillBar = ({ skill, level }) => (
-  <div className="mb-4">
-    <div className="flex justify-between mb-1">
+const SkillBar = ({ skill, level, index }) => (
+  <motion.div 
+    className="mb-6"
+    initial={{ opacity: 0, x: -20 }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.5, delay: index * 0.1 }}
+  >
+    <div className="flex justify-between mb-2">
       <span className="text-base font-medium text-white">{skill}</span>
-      <span className="text-sm font-medium text-white">{level}%</span>
+      <span className="text-sm font-medium text-indigo-300">{level}%</span>
     </div>
-    <div className="w-full bg-indigo-900 rounded-full h-2.5">
-      <div className="bg-indigo-500 h-2.5 rounded-full" style={{ width: `${level}%` }}></div>
+    <div className="w-full bg-gray-800 rounded-full h-3 shadow-inner">
+      <motion.div 
+        className="bg-gradient-to-r from-indigo-500 to-purple-500 h-3 rounded-full"
+        initial={{ width: 0 }}
+        animate={{ width: `${level}%` }}
+        transition={{ duration: 1.5, delay: 0.2 + index * 0.1 }}
+      ></motion.div>
     </div>
-  </div>
+  </motion.div>
 );
 
-const TechStackSection = ({ title, techs }) => (
-  <div className="mb-6">
-    <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
-    <div className="flex flex-wrap gap-2">
-      {techs.map((tech, index) => (
-        <span key={index} className="bg-indigo-800 text-white px-3 py-1 rounded-full text-sm">{tech}</span>
-      ))}
+const TechStackCard = ({ title, technologies, practices, index }) => (
+  <motion.div
+    className="glass-panel h-full"
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6, delay: index * 0.2 }}
+    viewport={{ once: true }}
+  >
+    <div className="p-6 border-b border-indigo-800/30">
+      <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-300 mb-2">{title}</h3>
     </div>
-  </div>
+    <div className="p-6 space-y-5">
+      <div>
+        <h4 className="text-lg font-semibold text-indigo-300 mb-3">Core Technologies</h4>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {technologies.map((tech, idx) => (
+            <motion.span
+              key={idx}
+              className="bg-gradient-to-r from-indigo-800 to-indigo-900 text-white px-3 py-1 rounded-full text-sm shadow-md hover:shadow-indigo-500/20 transition-all duration-300 border border-indigo-700/50"
+              whileHover={{ scale: 1.05, y: -2 }}
+            >
+              {tech}
+            </motion.span>
+          ))}
+        </div>
+      </div>
+      
+      <div>
+        <h4 className="text-lg font-semibold text-indigo-300 mb-3">Best Practices</h4>
+        <ul className="space-y-2 text-gray-300">
+          {practices.map((practice, idx) => (
+            <li key={idx} className="flex items-start">
+              <span className="text-indigo-400 mr-2">•</span>
+              <span>{practice}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </motion.div>
 );
 
 const Home = () => {
   const [showMore, setShowMore] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const projectData = [
     { name: 'JaanchGPT', value: 100 },
@@ -49,157 +80,302 @@ const Home = () => {
     { name: 'Yoga AI', value: 60 },
   ];
 
-  const techStacks = {
-    languages: ['Python', 'JavaScript', 'TypeScript', 'HTML/CSS'],
-    backend: ['Django', 'FastAPI', 'Flask'],
-    frontend: ['React.js', 'React Native', 'Tailwind CSS', 'Bootstrap'],
-    database: ['PostgreSQL', 'SQLite', 'Google BigQuery'],
-    cloud: ['Google Cloud Platform (GCP)', 'NGINX', 'UWSGI'],
-    ml: ['TensorFlow.js', 'Keras', 'Scikit-learn', 'Spacy', 'NLTK', 'OpenAI API', 'Facebook NMT'],
-    other: ['n8n', 'Instagram Graph API', 'WebRTC', 'Git', 'GitHub', 'Docker'],
+  const techExpertise = {
+    backend: {
+      technologies: ['Python', 'Node.js', 'Django', 'Express', 'FastAPI', 'GraphQL', 'PostgreSQL', 'MongoDB', 'Redis', 'Knex'],
+      practices: [
+        'Microservice architecture with domain-driven design',
+        'Event-driven systems using message queues',
+        'Robust database schema design with optimized queries',
+        'JWT authentication with role-based access control',
+        'End-to-end encryption and data protection protocols',
+        'API versioning and comprehensive documentation'
+      ]
+    },
+    frontend: {
+      technologies: ['React.js', 'Next.js', 'TypeScript', 'Redux', 'React Native', 'Tailwind CSS', 'Framer Motion', 'WebSockets'],
+      practices: [
+        'Component-driven architecture with reusable patterns',
+        'State management strategies for complex applications',
+        'Responsive design with mobile-first approach',
+        'Accessibility implementation (WCAG standards)',
+        'Performance optimization and code splitting',
+        'Real-time data visualization and updates'
+      ]
+    },
+    devops: {
+      technologies: ['AWS', 'GCP', 'Docker', 'Kubernetes', 'CI/CD', 'Terraform', 'GitHub Actions', 'Nginx'],
+      practices: [
+        'Infrastructure as Code with version control',
+        'Zero-downtime deployment strategies',
+        'Automated testing and continuous integration',
+        'Containerization for consistent environments',
+        'Cloud-native security and compliance measures',
+        'Scalable architecture with auto-scaling policies'
+      ]
+    }
   };
 
-  return (
-    <div className="max-w-6xl mx-auto p-5 min-h-screen text-white relative" style={{ backgroundColor: '#000' }}>
-      <div
-        className="relative text-center"
-        style={{
-          backgroundImage: `url(${backgroundImage})`,
-          backgroundSize: 'contain',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'top center',
-          paddingTop: '250px',
-          paddingBottom: '100px',
-        }}
-      >
-        {/* Profile image section */}
-        <img
-        className="w-40 h-40 rounded-full mx-auto border-4 border-white-500 shadow-lg object-cover" // Added object-cover
-        src={gopal}
-        alt="Gopal Singh"
-      />
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const currentScroll = window.scrollY;
+      setScrollProgress(currentScroll / totalScroll);
+    };
 
-        <p className="text-2xl text-white mt-2">CEO & Co-Founder | JaanchAI | AI Architect | NLP Specialist</p>
-        <p className="text-lg text-white mt-2 max-w-2xl mx-auto">
-          Revolutionizing e-commerce, logistics, and retail through AI-driven intelligent automation.
-        </p>
-        {/* "Building JaanchAI" link made standout */}
-        <p className="text-xl text-white mt-6">
-          <a
-            href="https://jaanch.ai"
-            className="text-indigo-400 font-bold hover:text-indigo-300 hover:shadow-md hover:shadow-indigo-500 transition-all duration-300 transform hover:scale-105"
-            style={{ fontSize: '1.5rem', textShadow: '0px 4px 6px rgba(0, 0, 0, 0.2)' }}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Building JaanchAI
-          </a>
-        </p>
-        <div className="flex justify-center space-x-4 mt-4">
-          <a href="https://github.com/akshay594" className="text-indigo-400 hover:text-indigo-300 transition-colors">
-            <Github size={28} />
-          </a>
-          <a href="https://www.linkedin.com/in/theunblunt/" className="text-indigo-400 hover:text-indigo-300 transition-colors">
-            <Linkedin size={28} />
-          </a>
-          <a href="mailto:gopal@jaanch.ai" className="text-indigo-400 hover:text-indigo-300 transition-colors">
-            <Mail size={28} />
-          </a>
-        </div>
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <div className="relative min-h-screen text-white">
+      {/* Progress bar */}
+      <div className="fixed top-0 left-0 right-0 h-1 z-50 bg-gray-800">
+        <div 
+          className="h-full bg-gradient-to-r from-blue-500 via-purple-400 to-indigo-400"
+          style={{ width: `${scrollProgress * 100}%` }}
+        ></div>
       </div>
 
-      {/* Black background for inner sections */}
-      <section className="mt-16 bg-black p-8 rounded-lg shadow-xl">
-        <h2 className="text-4xl font-bold mb-6 text-white">About Me</h2>
-        <p className="text-lg text-white leading-relaxed">
-          As an innovative AI architect, I specialize in crafting scalable solutions that address complex business challenges. My expertise in machine learning, natural language processing, and data analytics has been the cornerstone in co-founding <span className="text-indigo-400 font-semibold">JaanchAI</span>, where we're reshaping the e-commerce landscape through AI-driven insights.
-        </p>
-        <p className="text-lg text-white mt-4 leading-relaxed">
-          At JaanchAI, we empower businesses with cutting-edge forecasting, pricing strategies, and competitor analysis. My passion lies in leveraging state-of-the-art AI technologies to drive innovation, optimize operations, and enhance decision-making across various sectors.
-        </p>
-        <button 
-          onClick={() => setShowMore(!showMore)} 
-          className="mt-4 flex items-center text-indigo-400 hover:text-indigo-300 transition-colors"
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          className="relative text-center pt-40 pb-20"
         >
-          {showMore ? 'Show Less' : 'Show More'}
-          {showMore ? <ChevronUp className="ml-1" /> : <ChevronDown className="ml-1" />}
-        </button>
-        {showMore && (
-          <div className="mt-4 text-white">
-            <p>My journey in tech has been marked by significant milestones:</p>
-            <ul className="list-disc list-inside mt-2 space-y-2">
-              <li>Led data science initiatives at LetsUpgrade.in, educating aspiring data scientists.</li>
-              <li>Developed Project Management AI, an AI-powered project management tool.</li>
-              <li>Contributed as a machine learning consultant for Stineseed.com, enhancing agricultural predictions.</li>
-              <li>Authored technical content for Neptune.ai, sharing insights on machine learning practices.</li>
-            </ul>
+          {/* Neural Nerd text behind profile image - positioned higher */}
+          <div className="absolute top-0 left-0 w-full flex justify-center" style={{ paddingTop: "120px" }}>
+            <h2 className="text-6xl font-bold blur-[2px] text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-purple-300 to-indigo-300">
+              A Neural Nerd
+            </h2>
           </div>
-        )}
-      </section>
+          
+          {/* Profile image with animated border */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="relative mx-auto w-44 h-44 mb-10 z-10 mt-32"
+          >
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-purple-400 to-indigo-400 animate-spin-slow" style={{ animationDuration: '8s' }}></div>
+            <img
+              className="absolute inset-1 w-[164px] h-[164px] rounded-full mx-auto shadow-2xl object-cover z-10"
+              src={gopal}
+              alt="Gopal Singh"
+            />
+          </motion.div>
 
-      <section className="mt-16 bg-black p-8 rounded-lg shadow-xl">
-        <h2 className="text-4xl font-bold mb-6 text-white">Key Expertise</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <SkillBar skill="AI & Machine Learning" level={95} />
-            <SkillBar skill="Natural Language Processing" level={90} />
-            <SkillBar skill="Full-Stack Development" level={85} />
-            <SkillBar skill="Cloud & DevOps" level={80} />
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-5xl font-bold mt-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-purple-300 to-indigo-300"
+          >
+            Gopal Singh
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="text-lg text-blue-100 mt-4 max-w-2xl mx-auto"
+          >
+            Building intelligent systems that merge human creativity with algorithmic precision.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.7 }}
+            className="flex justify-center space-x-6 mt-8"
+          >
+            <motion.a 
+              href="https://github.com/akshay594" 
+              className="text-white hover:text-blue-300 transition-colors p-2 rounded-full bg-blue-900/30 hover:bg-blue-800/50 backdrop-blur-sm"
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <Github size={28} />
+            </motion.a>
+            <motion.a 
+              href="https://www.linkedin.com/in/theunblunt/" 
+              className="text-white hover:text-blue-300 transition-colors p-2 rounded-full bg-blue-900/30 hover:bg-blue-800/50 backdrop-blur-sm"
+              whileHover={{ scale: 1.1, rotate: -5 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <Linkedin size={28} />
+            </motion.a>
+            <motion.a 
+              href="mailto:gopalsinghpanwar411@gmail.com" 
+              className="text-white hover:text-blue-300 transition-colors p-2 rounded-full bg-blue-900/30 hover:bg-blue-800/50 backdrop-blur-sm"
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <Mail size={28} />
+            </motion.a>
+          </motion.div>
+        </div>
+
+        {/* About Me Section with glass morphism */}
+        <motion.section 
+          className="mt-20 p-8 rounded-2xl shadow-xl backdrop-blur-sm bg-gradient-to-br from-blue-900/10 to-purple-900/10 border border-blue-900/20"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <h2 className="text-4xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-300">About Me</h2>
+          <p className="text-lg text-blue-100 leading-relaxed">
+            As an innovative AI architect, I specialize in crafting scalable solutions that address complex business challenges. My expertise in machine learning, natural language processing, and data analytics has been the cornerstone in co-founding <span className="text-blue-400 font-semibold">JaanchAI</span>, where we're reshaping the e-commerce landscape through AI-driven insights.
+          </p>
+          <p className="text-lg text-blue-100 mt-4 leading-relaxed">
+            At JaanchAI, we empower businesses with cutting-edge forecasting, pricing strategies, and competitor analysis. My passion lies in leveraging state-of-the-art AI technologies to drive innovation, optimize operations, and enhance decision-making across various sectors.
+          </p>
+          <motion.button 
+            onClick={() => setShowMore(!showMore)} 
+            className="mt-6 flex items-center text-blue-300 hover:text-blue-100 transition-colors px-4 py-2 rounded-lg bg-blue-900/30 hover:bg-blue-800/50"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {showMore ? 'Show Less' : 'Show More'}
+            {showMore ? <ChevronUp className="ml-1" /> : <ChevronDown className="ml-1" />}
+          </motion.button>
+          
+          {showMore && (
+            <motion.div 
+              className="mt-6 text-blue-100"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <p>My journey in tech has been marked by significant milestones:</p>
+              <ul className="list-disc list-inside mt-3 space-y-3">
+                <motion.li 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: 0.1 }}
+                >
+                  Led data science initiatives at LetsUpgrade.in, educating aspiring data scientists.
+                </motion.li>
+                <motion.li 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: 0.2 }}
+                >
+                  Developed Project Management AI, an AI-powered project management tool.
+                </motion.li>
+                <motion.li 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: 0.3 }}
+                >
+                  Contributed as a machine learning consultant for Stineseed.com, enhancing agricultural predictions.
+                </motion.li>
+                <motion.li 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: 0.4 }}
+                >
+                  Authored technical content for Neptune.ai, sharing insights on machine learning practices.
+                </motion.li>
+              </ul>
+            </motion.div>
+          )}
+        </motion.section>
+
+        {/* Key Expertise Section */}
+        <motion.section 
+          className="mt-20 p-8 rounded-2xl shadow-xl backdrop-blur-sm bg-gradient-to-br from-blue-900/10 to-purple-900/10 border border-blue-900/20"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <h2 className="text-4xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-300">Key Expertise</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div>
+              <SkillBar skill="AI & Machine Learning" level={95} index={0} />
+              <SkillBar skill="Natural Language Processing" level={90} index={1} />
+              <SkillBar skill="Full-Stack Development" level={85} index={2} />
+              <SkillBar skill="Cloud & DevOps" level={80} index={3} />
+            </div>
+            <div>
+              <motion.h3 
+                className="text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-300 mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                Project Impact
+              </motion.h3>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="bg-gray-900/50 p-4 rounded-lg backdrop-blur-sm border border-blue-900/30"
+              >
+                <ResponsiveContainer width="100%" height={220}>
+                  <LineChart data={projectData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#4B5563" />
+                    <XAxis dataKey="name" stroke="#9CA3AF" />
+                    <YAxis stroke="#9CA3AF" />
+                    <Tooltip contentStyle={{ backgroundColor: '#1E1E1E', border: 'none' }} />
+                    <Line 
+                      type="monotone" 
+                      dataKey="value" 
+                      stroke="url(#colorGradient)" 
+                      strokeWidth={3}
+                      dot={{ fill: '#818CF8', strokeWidth: 2, r: 6 }}
+                      activeDot={{ r: 8, fill: '#C4B5FD' }}
+                    />
+                    <defs>
+                      <linearGradient id="colorGradient" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stopColor="#818CF8" />
+                        <stop offset="100%" stopColor="#C4B5FD" />
+                      </linearGradient>
+                    </defs>
+                  </LineChart>
+                </ResponsiveContainer>
+              </motion.div>
+            </div>
           </div>
-          <div>
-            <h3 className="text-2xl font-semibold text-white mb-4">Project Impact</h3>
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={projectData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#4B5563" />
-                <XAxis dataKey="name" stroke="#9CA3AF" />
-                <YAxis stroke="#9CA3AF" />
-                <Tooltip contentStyle={{ backgroundColor: '#1E1E1E', border: 'none' }} />
-                <Line type="monotone" dataKey="value" stroke="#818CF8" strokeWidth={2} />
-              </LineChart>
-            </ResponsiveContainer>
+        </motion.section>
+
+        {/* Technical Expertise Section */}
+        <motion.section 
+          className="mt-20 mb-20 p-8 rounded-2xl shadow-xl backdrop-blur-sm bg-gradient-to-br from-blue-900/10 to-purple-900/10 border border-blue-900/20"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <h2 className="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-300">Technical Expertise</h2>
+          <p className="text-lg text-blue-100 mb-10">
+            With 8+ years of industry experience, I've mastered end-to-end development across multiple domains.
+            My work emphasizes scalable architecture, security best practices, and modern development approaches.
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <TechStackCard 
+              title="Backend Engineering" 
+              technologies={techExpertise.backend.technologies}
+              practices={techExpertise.backend.practices}
+              index={0}
+            />
+            <TechStackCard 
+              title="Frontend Development" 
+              technologies={techExpertise.frontend.technologies}
+              practices={techExpertise.frontend.practices}
+              index={1}
+            />
+            <TechStackCard 
+              title="DevOps & Cloud" 
+              technologies={techExpertise.devops.technologies}
+              practices={techExpertise.devops.practices}
+              index={2}
+            />
           </div>
-        </div>
-      </section>
-
-      <section className="mt-16 bg-black p-8 rounded-lg shadow-xl">
-        <h2 className="text-4xl font-bold mb-6 text-white">Tech Stack</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <TechStackSection title="Programming Languages" techs={techStacks.languages} />
-          <TechStackSection title="Backend Frameworks" techs={techStacks.backend} />
-          <TechStackSection title="Frontend Frameworks & Libraries" techs={techStacks.frontend} />
-          <TechStackSection title="Database Technologies" techs={techStacks.database} />
-          <TechStackSection title="Cloud Platforms & DevOps" techs={techStacks.cloud} />
-          <TechStackSection title="Machine Learning & AI" techs={techStacks.ml} />
-          <TechStackSection title="Other Technologies" techs={techStacks.other} />
-        </div>
-      </section>
-
-      <section className="mt-16">
-        <h2 className="text-4xl font-bold mb-6 text-white">Featured Projects</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ProjectCard 
-            title="JaanchGPT" 
-            description="AI-driven SaaS platform for e-commerce analytics and automation."
-            technologies={["Python", "Django", "React", "OpenAI", "GCP"]}
-          />
-          <ProjectCard 
-            title="Project Management AI" 
-            description="AI-powered project management tool for risk and budget assessments."
-            technologies={["FastAPI", "React", "OpenAI", "PostgreSQL"]}
-          />
-          <ProjectCard 
-            title="Babel" 
-            description="Real-time language translation app using advanced NLP models."
-            technologies={["React Native", "Django", "FastAPI", "WebRTC"]}
-          />
-          <ProjectCard 
-            title="Real-Time Yoga AI" 
-            description="Motion assessment platform providing live feedback on yoga poses."
-            technologies={["TensorFlow.js", "React", "Keras"]}
-          />
-        </div>
-      </section>
-
+        </motion.section>
+      </div>
     </div>
   );
 };

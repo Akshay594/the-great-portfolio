@@ -1,3 +1,120 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap');
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #050816;
+    @apply text-white;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+
+  ::selection {
+    @apply bg-indigo-800 text-white;
+  }
+}
+
+@layer components {
+  .hero-gradient {
+    background: linear-gradient(90.13deg, #4338ca 1.9%, #6366f1 97.5%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .glass-card {
+    @apply backdrop-blur-lg bg-white/5 border border-white/10 rounded-2xl;
+  }
+
+  .glass-panel {
+    @apply backdrop-blur-md bg-indigo-900/20 border border-indigo-900/30 rounded-xl;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-800 hover:from-indigo-500 hover:to-indigo-700 text-white font-medium rounded-lg shadow-lg hover:shadow-indigo-500/50 transition-all duration-300;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center px-6 py-3 bg-transparent border border-indigo-600 text-indigo-300 hover:bg-indigo-900/20 font-medium rounded-lg transition-all duration-300;
+  }
+
+  .grid-pattern {
+    background-image: 
+      linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .animate-glow {
+    animation: glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+  }
+
+  .shimmer {
+    @apply bg-gradient-to-r from-transparent via-white/10 to-transparent;
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+}
+
+@layer utilities {
+  .text-shadow-glow {
+    text-shadow: 0 0 10px rgba(99, 102, 241, 0.5), 0 0 20px rgba(99, 102, 241, 0.3);
+  }
+
+  .shadow-neon {
+    box-shadow: 
+      0 0 5px rgba(99, 102, 241, 0.3),
+      0 0 20px rgba(99, 102, 241, 0.2);
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(99, 102, 241, 0.5) rgba(30, 41, 59, 0.5);
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-gray-900/50 rounded-full;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-indigo-700/70 rounded-full;
+  }
+}
+
+/* Animated background */
+.animated-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.1;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
+  background-size: 100% 100%;
+  transform-origin: center;
+  animation: pulse-slow 8s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}

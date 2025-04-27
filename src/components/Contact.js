@@ -7,7 +7,7 @@ const Contact = () => {
       <p className="text-lg text-gray-300">
         Feel free to reach out to me for collaboration or consulting inquiries.
       </p>
-      <p className="text-lg text-blue-400 mt-4">Email: gopal@jaanch.ai</p>
+      <p className="text-lg text-blue-400 mt-4">Email: gopalsinghpanwar411@gmail.com</p>
     </div>
   );
 };
