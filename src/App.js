@@ -4,15 +4,12 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Blog from './components/Blog';
 import BlogPost from './components/BlogPost';
-import BlogPostPersonalization from './components/BlogPostPersonalization';
 import Shows from './components/Shows';
 import Books from './components/Books';
 import ParticlesBackground from './components/ParticlesBackground';
-import ThemeToggle from './components/ThemeToggle';
 import CustomCursor from './components/CustomCursor';
 
 function App() {
-
   return (
     <Router>
       <ParticlesBackground />
@@ -21,13 +18,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/blog/ai-personalization-ecommerce" element={<BlogPostPersonalization />} />
+          <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="/shows" element={<Shows />} />
           <Route path="/books" element={<Books />} />
         </Routes>
       </div>
-      <ThemeToggle />
       <CustomCursor />
     </Router>
   );
