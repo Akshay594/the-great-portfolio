@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Github, Linkedin, Mail, Brain, Code, Terminal, Cpu, Braces, Workflow, Network, Layers, Boxes, Database } from 'lucide-react';
+import { Github, Linkedin, Mail, Brain, Code, Terminal, Cpu, Braces, Workflow, Network, Layers, Boxes, Database, Youtube, Instagram, Twitter } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import gopal from './gopal.png';
 
@@ -221,6 +221,40 @@ const Home = () => {
             >
               Building the future with code | Living with purpose
             </motion.p>
+
+            {/* Banner Social Links */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.7 }}
+              className="mt-8 flex justify-center space-x-6"
+            >
+              {[
+                { href: "https://github.com/akshay594", icon: Github, label: "GitHub" },
+                { href: "https://www.linkedin.com/in/theunblunt/", icon: Linkedin, label: "LinkedIn" },
+                { href: "https://www.youtube.com/@unblunttheory", icon: Youtube, label: "YouTube" },
+                { href: "https://www.instagram.com/unblunttheory/", icon: Instagram, label: "Instagram" },
+                { href: "https://x.com/unblunttheory", icon: Twitter, label: "Twitter" },
+                { href: "mailto:gopalsinghpanwar411@gmail.com", icon: Mail, label: "Email" }
+              ].map(({ href, icon: Icon, label }) => (
+                <motion.a
+                  key={href}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.2, y: -3 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="relative group p-3 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-500/50 transition-all duration-300"
+                  title={label}
+                >
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 blur opacity-0 group-hover:opacity-75 transition duration-300" />
+                  <Icon 
+                    size={24} 
+                    className="relative text-gray-400 group-hover:text-white transition-colors duration-300" 
+                  />
+                </motion.a>
+              ))}
+            </motion.div>
           </motion.div>
         </div>
       </div>
@@ -480,32 +514,6 @@ const consciousness = {
         </ul>
       </nav>
 
-      {/* Social Links with Hover Effects */}
-      <motion.div 
-        className="fixed bottom-8 right-8 flex flex-col space-y-4"
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 1 }}
-      >
-        {[
-          { href: "https://github.com/akshay594", icon: Github },
-          { href: "https://www.linkedin.com/in/theunblunt/", icon: Linkedin },
-          { href: "mailto:gopalsinghpanwar411@gmail.com", icon: Mail }
-        ].map(({ href, icon: Icon }) => (
-          <motion.a
-            key={href}
-            href={href}
-            whileHover={{ scale: 1.2, y: -5 }}
-            whileTap={{ scale: 0.9 }}
-            className="relative group"
-          >
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 blur opacity-25 group-hover:opacity-100 transition duration-300" />
-            <div className="relative p-3 bg-black rounded-full border border-white/10 hover:border-purple-500/50 transition-colors duration-300">
-              <Icon size={20} className="text-white group-hover:text-purple-400 transition-colors duration-300" />
-            </div>
-          </motion.a>
-        ))}
-      </motion.div>
     </div>
   );
 };

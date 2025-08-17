@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronRight, Github, Linkedin, Mail, Code, Book, Tv, Home } from 'lucide-react';
+import { Menu, X, ChevronRight, Code, Book, Tv, Home } from 'lucide-react';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,11 +28,7 @@ const Header = () => {
     { name: 'Books', path: '/books', icon: Book },
   ];
 
-  const socialLinks = [
-    { icon: Github, href: 'https://github.com/akshay594', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://www.linkedin.com/in/theunblunt/', label: 'LinkedIn' },
-    { icon: Mail, href: 'mailto:gopalsinghpanwar411@gmail.com', label: 'Email' },
-  ];
+
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -121,23 +117,6 @@ const Header = () => {
                   );
                 })}
               </div>
-
-              {/* Social Links */}
-              <div className="flex items-center ml-6 bg-white/5 rounded-2xl p-1.5 backdrop-blur-sm">
-                {socialLinks.map(({ icon: Icon, href, label }) => (
-                  <motion.a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative p-2 rounded-xl text-gray-400 hover:text-white transition-colors duration-300"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Icon className="w-4 h-4" />
-                  </motion.a>
-                ))}
-              </div>
             </nav>
 
             {/* Mobile Menu Button */}
@@ -212,25 +191,6 @@ const Header = () => {
                     );
                   })}
                 </nav>
-                
-                {/* Mobile Social Links */}
-                <div className="p-4 border-t border-white/10">
-                  <div className="flex justify-center space-x-8">
-                    {socialLinks.map(({ icon: Icon, href, label }) => (
-                      <motion.a
-                        key={label}
-                        href={href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 rounded-xl text-gray-400 hover:text-white transition-colors duration-300"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <Icon className="w-5 h-5" />
-                      </motion.a>
-                    ))}
-                  </div>
-                </div>
               </motion.div>
             </>
           )}
