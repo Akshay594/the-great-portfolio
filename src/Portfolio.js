@@ -40,35 +40,36 @@ const Portfolio = () => {
             alt="Gopal Singh"
           />
           <h1 className="text-5xl font-bold mt-4">Gopal Singh</h1>
-          <p className="text-xl text-gray-400 mt-2">CEO & Co-Founder | JaanchAI | AI Architect | NLP Specialist</p>
+          <p className="text-xl text-gray-400 mt-2">theunblunt | Rust | AI Infrastructure | Jaipur</p>
           <p className="text-md text-gray-400 mt-2">
-            Harnessing AI to revolutionize e-commerce, logistics, and retail with intelligent automation.
+            Quiet infrastructure. Long horizons. The shipping is the statement.
           </p>
         </div>
 
         {/* About Section */}
         <section className="mt-12">
-          <h2 className="text-4xl font-bold mb-5 text-blue-400">About Me</h2>
+          <h2 className="text-4xl font-bold mb-5 text-blue-400">About</h2>
           <p className="text-lg text-gray-300">
-            I'm an AI architect specializing in building scalable and robust solutions to solve real-world business challenges. With expertise in machine learning, NLP, and data analytics, I've co-founded 
-            <span className="text-blue-400"> JaanchAI</span>, an AI-driven platform empowering e-commerce businesses with insightful automation for forecasting, pricing, and competitor analysis. My focus is on leveraging the latest advancements in AI to drive innovation, streamline operations, and enhance decision-making.
+            Nine years in AI and ML. Peer-reviewed with Stanford. College dropout who outperformed the credentialed. 
+            The dropout is not the flex. The output is. Building <span className="text-blue-400">Metriqual</span> with Girdhar Verma. 
+            AI gateway. Observability. Rust-first. 700+ production prompts.
           </p>
         </section>
 
         {/* Projects Section */}
         <section className="mt-12" id="blog">
-          <h2 className="text-4xl font-bold mb-5 text-blue-400">Projects</h2>
+          <h2 className="text-4xl font-bold mb-5 text-blue-400">Ventures</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="bg-gray-800 p-6 shadow-lg rounded-lg">
-              <h3 className="text-3xl font-semibold text-blue-300 mb-3">JaanchAI</h3>
+              <h3 className="text-3xl font-semibold text-blue-300 mb-3">Metriqual</h3>
               <p className="text-gray-400">
-                AI-driven SaaS platform offering deep analysis for pricing, competitor tracking, inventory management, and more for e-commerce businesses.
+                The current infrastructure bet. AI gateway, observability, Rust-first. 700+ production prompts. Built with Girdhar Verma.
               </p>
             </div>
             <div className="bg-gray-800 p-6 shadow-lg rounded-lg">
-              <h3 className="text-3xl font-semibold text-blue-300 mb-3">AI Project Management Tool</h3>
+              <h3 className="text-3xl font-semibold text-blue-300 mb-3">GetMeCited</h3>
               <p className="text-gray-400">
-                A tool designed to manage AI projects with real-time insights, deadline estimation, and automated risk assessment to enhance productivity and success rates.
+                Runs in the background. Academic citation infrastructure. Quiet. Compounding.
               </p>
             </div>
           </div>
@@ -76,19 +77,19 @@ const Portfolio = () => {
 
         {/* Skills Section */}
         <section className="mt-12" id="techs">
-          <h2 className="text-4xl font-bold mb-5 text-blue-400">Techs</h2>
+          <h2 className="text-4xl font-bold mb-5 text-blue-400">Stack</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="bg-gray-800 p-4 text-center rounded-lg shadow-lg">
-              <p className="text-lg font-semibold text-gray-300">Machine Learning</p>
+              <p className="text-lg font-semibold text-gray-300">Rust</p>
             </div>
             <div className="bg-gray-800 p-4 text-center rounded-lg shadow-lg">
-              <p className="text-lg font-semibold text-gray-300">Natural Language Processing</p>
+              <p className="text-lg font-semibold text-gray-300">PostgreSQL</p>
             </div>
             <div className="bg-gray-800 p-4 text-center rounded-lg shadow-lg">
-              <p className="text-lg font-semibold text-gray-300">Data Analytics</p>
+              <p className="text-lg font-semibold text-gray-300">Python</p>
             </div>
             <div className="bg-gray-800 p-4 text-center rounded-lg shadow-lg">
-              <p className="text-lg font-semibold text-gray-300">AI Architectures</p>
+              <p className="text-lg font-semibold text-gray-300">LLM Observability</p>
             </div>
           </div>
         </section>

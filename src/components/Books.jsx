@@ -2,70 +2,41 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const Book = ({ title, author, genre, rating, review }) => {
-  // Generate a color based on the title for a unique but consistent look
-  const generateColor = (str) => {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      hash = str.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    const hue = hash % 360;
-    return `${hue}, 70%, 45%`;
-  };
-  
-  const color = generateColor(title);
-  
   return (
     <motion.div
-      className="glass-panel p-0 relative overflow-hidden group rounded-xl shadow-xl border border-indigo-500/20"
-      initial={{ opacity: 0, y: 30 }}
+      className="relative bg-dark-card border border-gold-muted/40 p-6"
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      whileHover={{ y: -8, boxShadow: "0 20px 30px -10px rgba(79, 70, 229, 0.4)" }}
     >
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-10"></div>
+      <div className="absolute top-2 left-2 right-2 bottom-2 border border-gold/20 pointer-events-none"></div>
       
-      {/* Image container with gradient overlay */}
-      <div className="relative w-full h-56 overflow-hidden" style={{ background: `linear-gradient(45deg, hsl(${color}) 0%, hsl(${parseInt(color) + 40}, 70%, 30%) 100%)` }}>
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent z-10"></div>
-        <div className="flex flex-col items-center justify-center h-full text-center px-4">
-          <span className="text-5xl font-bold text-white/80 mb-2">{title.substring(0, 1)}</span>
-          <span className="text-white/90 text-sm font-medium truncate max-w-full">{title}</span>
+      <div className="flex justify-between items-start mb-2">
+        <div className="flex-1">
+          <h3 className="font-display text-xl text-gold">{title}</h3>
+          <p className="font-accent text-sm text-cream/50 italic">by {author}</p>
         </div>
-        <div className="absolute top-4 right-4 z-20">
-          <span className="bg-yellow-500/90 text-gray-900 font-bold px-2 py-1 rounded-md flex items-center text-sm backdrop-blur-sm">
-            <span className="mr-1">★</span> {rating}
-          </span>
-        </div>
-        <div className="absolute bottom-4 left-4 z-20">
-          <span className="bg-blue-900/70 text-blue-200 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm">
-            {genre}
-          </span>
-        </div>
+        <span className="font-display text-sm text-gold-muted">{rating}</span>
       </div>
       
-      <div className="p-6">
-        <h3 className="text-2xl font-bold mb-1 text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-300 group-hover:from-blue-200 group-hover:to-purple-200 transition-all duration-300">{title}</h3>
-        <p className="text-blue-200 mb-3 text-sm italic">by {author}</p>
-        <p className="text-blue-100 text-sm leading-relaxed">{review}</p>
-      </div>
+      <span className="inline-block font-body text-xs text-gold/50 uppercase tracking-wider mb-3">{genre}</span>
+      <p className="font-body text-cream/60 text-sm leading-relaxed">{review}</p>
     </motion.div>
   );
 };
 
 const CategoryTab = ({ name, isActive, onClick }) => (
-  <motion.button
+  <button
     onClick={onClick}
-    className={`px-6 py-3 rounded-lg transition-all duration-300 font-medium ${
+    className={`px-6 py-2 font-display text-sm tracking-widest uppercase transition-all duration-300 border ${
       isActive 
-        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-indigo-500/30' 
-        : 'bg-blue-900/30 text-blue-200 hover:bg-blue-800/50 backdrop-blur-sm border border-blue-800/30'
+        ? 'bg-gold text-dark border-gold' 
+        : 'bg-transparent text-cream/60 border-gold-muted/30 hover:border-gold hover:text-gold'
     }`}
-    whileHover={{ y: -2 }}
-    whileTap={{ scale: 0.98 }}
   >
     {name}
-  </motion.button>
+  </button>
 );
 
 const Books = () => {
@@ -431,42 +402,24 @@ const Books = () => {
     }
   };
 
-  // Container animations for the grid
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const bookVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6
-      }
-    }
-  };
-
   return (
-    <div className="min-h-screen pt-28 pb-20">
-      <div className="animated-bg"></div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-dark py-20">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-purple-300 to-blue-300 mb-4">
-            Bookshelf
+          <h1 className="font-display text-4xl md:text-5xl text-cream mb-4">
+            The Bookshelf
           </h1>
-          <p className="text-xl text-blue-100 max-w-3xl mx-auto mb-10">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="w-16 h-px bg-gold-muted"></div>
+            <span className="font-accent italic text-gold-muted">collected readings</span>
+            <div className="w-16 h-px bg-gold-muted"></div>
+          </div>
+          <p className="font-body text-cream/60 max-w-2xl mx-auto mb-12">
             Books that have influenced my thinking and broadened my understanding of the world.
           </p>
           
@@ -483,25 +436,18 @@ const Books = () => {
           </div>
         </motion.div>
         
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          key={activeCategory} // This forces animation to run when category changes
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {getActiveBooks().map((book, index) => (
-            <motion.div key={`${activeCategory}-${index}`} variants={bookVariants}>
-              <Book 
-                title={book.title}
-                author={book.author}
-                genre={book.genre}
-                rating={book.rating}
-                review={book.review}
-              />
-            </motion.div>
+            <Book 
+              key={`${activeCategory}-${index}`}
+              title={book.title}
+              author={book.author}
+              genre={book.genre}
+              rating={book.rating}
+              review={book.review}
+            />
           ))}
-        </motion.div>
+        </div>
       </div>
     </div>
   );

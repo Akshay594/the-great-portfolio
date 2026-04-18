@@ -6,15 +6,12 @@ import Blog from './components/Blog';
 import BlogPost from './components/BlogPost';
 import Shows from './components/Shows';
 import Books from './components/Books';
-import ParticlesBackground from './components/ParticlesBackground';
-import CustomCursor from './components/CustomCursor';
 
 function App() {
   return (
     <Router>
-      <ParticlesBackground />
-      <Header />
-      <div className="min-h-screen bg-gradient-to-r from-gray-900/40 via-gray-800/30 to-gray-900/40 text-white">
+      <div className="min-h-screen bg-dark text-ink">
+        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/blog" element={<Blog />} />
@@ -23,7 +20,6 @@ function App() {
           <Route path="/books" element={<Books />} />
         </Routes>
       </div>
-      <CustomCursor />
     </Router>
   );
 }

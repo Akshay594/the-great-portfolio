@@ -1,519 +1,397 @@
-import React, { useEffect, useRef } from 'react';
-import { Github, Linkedin, Mail, Brain, Code, Terminal, Cpu, Braces, Workflow, Network, Layers, Boxes, Database, Youtube, Instagram, Twitter } from 'lucide-react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React from 'react';
+import { Github, Linkedin, Mail, Youtube, Twitter } from 'lucide-react';
+import { motion } from 'framer-motion';
 import gopal from './gopal.png';
 
-const MatrixRainCanvas = () => {
-  const canvasRef = useRef(null);
-  
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%";
-    const drops = [];
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    
-    for (let i = 0; i < columns; i++) {
-      drops[i] = 1;
-    }
-    
-    const draw = () => {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      ctx.fillStyle = '#0F0';
-      ctx.font = fontSize + 'px monospace';
-      
-      for (let i = 0; i < drops.length; i++) {
-        const text = matrix[Math.floor(Math.random() * matrix.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
-      }
-    };
-    
-    const interval = setInterval(draw, 35);
-    return () => clearInterval(interval);
-  }, []);
-  
-  return (
-    <canvas
-      ref={canvasRef}
-      className="fixed top-0 left-0 w-full h-full opacity-10 pointer-events-none"
-    />
-  );
-};
-
-const CodeBlock = ({ children }) => (
-  <div className="font-mono bg-gray-900/50 p-4 rounded-lg border border-gray-800 overflow-x-auto">
-    <pre className="text-sm">
-      <code className="text-green-400">{children}</code>
-    </pre>
+// Ornate Divider Component
+const OrnateDivider = () => (
+  <div className="flex items-center justify-center my-16">
+    <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gold-muted to-transparent"></div>
+    <span className="px-4 text-gold text-2xl">❧</span>
+    <div className="flex-1 h-px bg-gradient-to-l from-transparent via-gold-muted to-transparent"></div>
   </div>
 );
 
-const GlowingBorder = ({ children }) => (
-  <div className="relative group">
-    <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-    <div className="relative bg-black rounded-lg">
-      {children}
-    </div>
+// Chapter Header Component
+const ChapterHeader = ({ number, title }) => (
+  <div className="text-center mb-12">
+    <span className="font-display text-xs tracking-[0.3em] text-gold uppercase">Chapter {number}</span>
+    <h2 className="font-display text-3xl md:text-4xl text-cream mt-2 tracking-wide">{title}</h2>
   </div>
 );
 
+// Vintage Card Component
+const VintageCard = ({ children, className = '' }) => (
+  <div className={`relative bg-dark-card border border-gold-muted/40 p-6 ${className}`}>
+    <div className="absolute top-2 left-2 right-2 bottom-2 border border-gold/20 pointer-events-none"></div>
+    {children}
+  </div>
+);
 
-const TechStack = ({ stack }) => (
+// Code Block with vintage styling
+const ManuscriptBlock = ({ children }) => (
+  <div className="bg-dark-elevated border border-gold-muted/30 p-6 font-mono text-gold/80 text-sm leading-relaxed">
+    <pre className="whitespace-pre-wrap">{children}</pre>
+  </div>
+);
+
+// Tech Item Component
+const TechItem = ({ name, years, description, highlights }) => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+    initial={{ opacity: 0, y: 10 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    className="border-b border-gold-muted/20 py-5 last:border-b-0"
   >
-    {stack.map((tech, index) => (
-      <motion.div
-        key={tech.name}
-        whileHover={{ scale: 1.05, y: -5 }}
-        className="group relative"
-      >
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-        <div className="relative bg-black/40 backdrop-blur-sm border border-white/10 p-6 rounded-xl hover:border-purple-500/50 transition-colors duration-300">
-          <div className="flex items-center justify-between mb-4">
-            <tech.icon className="w-8 h-8 text-purple-400 group-hover:text-purple-300 transition-colors duration-300" />
-            <div className="text-lg font-bold text-purple-300 group-hover:text-purple-200">
-              {tech.stats}%
-            </div>
-          </div>
-          <h3 className="font-bold text-lg text-white mb-2">{tech.name}</h3>
-          <p className="text-sm text-gray-400 group-hover:text-gray-300">{tech.description}</p>
-        </div>
-      </motion.div>
-    ))}
+    <div className="flex items-baseline justify-between mb-2">
+      <h4 className="font-display text-lg text-gold">{name}</h4>
+      {years && <span className="font-accent text-xs text-gold-muted italic">{years}</span>}
+    </div>
+    <p className="font-body text-cream/70 text-sm leading-relaxed">{description}</p>
+    {highlights && (
+      <div className="flex flex-wrap gap-2 mt-3">
+        {highlights.map((h, i) => (
+          <span key={i} className="text-xs font-body text-cream/50 border border-gold-muted/30 px-2 py-1">{h}</span>
+        ))}
+      </div>
+    )}
   </motion.div>
 );
 
-const ScrollProgressBar = () => {
-  const { scrollYProgress } = useScroll();
-  
-  return (
-    <motion.div
-      className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transform origin-left z-50"
-      style={{ scaleX: scrollYProgress }}
-    />
-  );
-};
-
-const SectionDivider = () => (
-  <div className="relative h-32 my-20">
-    <div className="absolute inset-0 flex items-center justify-center">
-      <div className="w-px h-full bg-gradient-to-b from-transparent via-purple-500 to-transparent" />
-    </div>
-    <div className="absolute inset-0 flex items-center justify-center">
-      <div className="w-3 h-3 rounded-full bg-purple-500 shadow-lg shadow-purple-500/50" />
-    </div>
-  </div>
-);
-
 const Home = () => {
-  const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
-
   const techStacks = {
-    frontend: [
-      { name: 'React', icon: Code, description: 'Component-based architecture', stats: 95 },
-      { name: 'Next.js', icon: Network, description: 'Full-stack framework', stats: 90 },
-      { name: 'TypeScript', icon: Braces, description: 'Type-safe development', stats: 92 },
-      { name: 'Tailwind CSS', icon: Layers, description: 'Utility-first styling', stats: 88 },
-      { name: 'Framer Motion', icon: Workflow, description: 'Animation library', stats: 85 },
-      { name: 'Redux', icon: Boxes, description: 'State management', stats: 88 },
-      { name: 'GraphQL', icon: Terminal, description: 'API querying', stats: 90 },
-      { name: 'Webpack', icon: Cpu, description: 'Module bundling', stats: 85 }
-    ],
-    backend: [
-      { name: 'Node.js', icon: Terminal, description: 'Runtime environment', stats: 95 },
-      { name: 'Express', icon: Network, description: 'Web framework', stats: 92 },
-      { name: 'Python', icon: Code, description: 'Backend development', stats: 90 },
-      { name: 'Django', icon: Boxes, description: 'Full-stack framework', stats: 88 },
-      { name: 'PostgreSQL', icon: Database, description: 'Relational database', stats: 90 },
-      { name: 'MongoDB', icon: Database, description: 'NoSQL database', stats: 85 },
-      { name: 'Redis', icon: Cpu, description: 'Caching system', stats: 88 },
-      { name: 'Docker', icon: Boxes, description: 'Containerization', stats: 92 }
+    infrastructure: [
+      { 
+        name: 'Rust', 
+        years: '3+ years',
+        description: 'Memory-safe systems programming without garbage collection overhead. Building high-performance services where reliability is non-negotiable—API gateways, data pipelines, and observability infrastructure.',
+        highlights: ['async/await', 'Tokio', 'Actix', 'Zero-cost abstractions']
+      },
+      { 
+        name: 'PostgreSQL', 
+        years: '8+ years',
+        description: 'Battle-tested relational database for complex data models. Advanced query optimization, partitioning strategies, and JSONB for flexible schemas when needed.',
+        highlights: ['Query optimization', 'Partitioning', 'pg_stat', 'Extensions']
+      },
+      { 
+        name: 'Python', 
+        years: '9+ years',
+        description: 'Primary language for machine learning research and production systems. Published peer-reviewed work with Stanford collaborators. Deep expertise in the scientific computing ecosystem.',
+        highlights: ['NumPy', 'Pandas', 'scikit-learn', 'FastAPI']
+      },
+      { 
+        name: 'Docker & K8s', 
+        years: '6+ years',
+        description: 'Container orchestration from development to production. Building reproducible environments and managing stateful workloads at scale.',
+        highlights: ['Helm', 'ArgoCD', 'Multi-stage builds', 'Service mesh']
+      }
     ],
     ai: [
-      { name: 'Neural Networks', icon: Brain, description: 'Deep learning architectures', stats: 95 },
-      { name: 'NLP', icon: Terminal, description: 'Language processing & understanding', stats: 90 },
-      { name: 'Computer Vision', icon: Cpu, description: 'Visual data analysis', stats: 85 },
-      { name: 'MLOps', icon: Workflow, description: 'ML infrastructure & deployment', stats: 88 },
-      { name: 'Reinforcement Learning', icon: Boxes, description: 'Agent-based learning', stats: 82 },
-      { name: 'GANs', icon: Layers, description: 'Generative modeling', stats: 85 },
-      { name: 'Transformers', icon: Network, description: 'Attention mechanisms', stats: 92 },
-      { name: 'Time Series', icon: Braces, description: 'Sequential data analysis', stats: 88 }
+      { 
+        name: 'LLM Observability', 
+        years: '2+ years',
+        description: 'Built production observability for 700+ prompts across multiple LLM providers. Trace latency, token usage, semantic drift, and hallucination patterns at scale.',
+        highlights: ['Prompt versioning', 'A/B testing', 'Cost analytics', 'Evals']
+      },
+      { 
+        name: 'AI Gateway', 
+        description: 'Rust-based routing layer for LLM requests. Intelligent caching, automatic fallbacks between providers, rate limiting, and response streaming with minimal latency overhead.',
+        highlights: ['Multi-provider', 'Semantic cache', 'Streaming', 'Circuit breaker']
+      },
+      { 
+        name: 'NLP & Transformers', 
+        years: '5+ years',
+        description: 'From classical NLP through the transformer revolution. Fine-tuning, RAG architectures, embeddings, and building domain-specific language understanding systems.',
+        highlights: ['BERT/GPT', 'RAG', 'Vector DBs', 'Embeddings']
+      },
+      { 
+        name: 'MLOps', 
+        years: '4+ years',
+        description: 'End-to-end ML pipelines: experiment tracking, model versioning, feature stores, and automated deployment. Making models production-ready, not just notebook-ready.',
+        highlights: ['MLflow', 'DVC', 'Feature stores', 'Model registry']
+      }
+    ],
+    tools: [
+      { 
+        name: 'TypeScript', 
+        years: '4+ years',
+        description: 'Type-safe JavaScript for complex frontend applications and Node.js services. Strict typing, generics, and discriminated unions for bulletproof interfaces.',
+        highlights: ['Strict mode', 'Generics', 'Node.js', 'Zod']
+      },
+      { 
+        name: 'React & Next.js', 
+        years: '5+ years',
+        description: 'Component-driven UI development with modern React patterns. Server-side rendering, static generation, and optimized client-side hydration.',
+        highlights: ['Hooks', 'Server Components', 'Tailwind', 'Framer Motion']
+      },
+      { 
+        name: 'Redis', 
+        years: '6+ years',
+        description: 'In-memory data structures for caching, session management, rate limiting, and real-time features. Understanding when to use—and when not to.',
+        highlights: ['Pub/Sub', 'Streams', 'Lua scripts', 'Clustering']
+      },
+      { 
+        name: 'System Design', 
+        description: 'Designing distributed systems that scale gracefully. Load balancing, database sharding, event-driven architectures, and graceful degradation patterns.',
+        highlights: ['CAP theorem', 'Event sourcing', 'CQRS', 'Microservices']
+      }
     ]
   };
 
-  const fitnessStats = [
-    { name: 'Power Clean', value: '225 lbs' },
-    { name: 'Deadlift', value: '405 lbs' },
-    { name: 'Squat', value: '315 lbs' },
-    { name: 'Bench Press', value: '275 lbs' },
-    { name: 'Running', value: '5K PR' },
-    { name: 'Boxing', value: '3 years' }
-  ];
-
   return (
-    <div className="relative min-h-screen text-white bg-black overflow-hidden">
-      <ScrollProgressBar />
-      <MatrixRainCanvas />
+    <div className="min-h-screen bg-dark text-cream">
       
       {/* Hero Section */}
-      <div id="hero" className="relative min-h-screen flex items-center justify-center">
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(17,24,39,0.7),rgba(0,0,0,1))]"></div>
+      <section className="relative min-h-screen flex items-center justify-center px-4 py-20">
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30z' fill='none' stroke='%23C9A227' stroke-width='0.5'/%3E%3C/svg%3E")`,
+            backgroundSize: '60px 60px'
+          }}></div>
         </div>
 
-        <div className="relative z-10 max-w-6xl mx-auto px-4 py-20">
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
           <motion.div
-            style={{ y }}
-            className="text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="relative mx-auto w-40 h-40 md:w-48 md:h-48 mb-8"
-            >
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 animate-spin-slow"
-                   style={{ animationDuration: '8s' }}></div>
+            {/* Portrait with ornate frame */}
+            <div className="relative mx-auto w-40 h-40 md:w-48 md:h-48 mb-8">
+              <div className="absolute inset-0 border-2 border-gold rounded-full"></div>
+              <div className="absolute inset-2 border border-gold-muted rounded-full"></div>
               <img
-                className="absolute inset-1 rounded-full mx-auto shadow-2xl object-cover z-10"
+                className="absolute inset-4 rounded-full object-cover"
                 src={gopal}
                 alt="Gopal Singh"
               />
-            </motion.div>
+            </div>
 
-            <motion.h1
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              className="text-4xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-purple-500 to-blue-500"
-            >
+            <h1 className="font-display text-4xl md:text-6xl text-cream tracking-wide mb-4">
               theunblunt
-            </motion.h1>
+            </h1>
 
-            <CodeBlock>
-              {`class TheUnblunt extends Human {
-  constructor() {
-    super();
-    this.traits = ['Neural Nerd', 'Fitness Enthusiast', 'Philosopher'];
-    this.motto = 'An inferencer of canon events';
-  }
+            <p className="font-accent text-xl md:text-2xl text-gold italic mb-8">
+              A Rust-writing Vedantin from Jaipur
+            </p>
+
+            <ManuscriptBlock>
+{`let approach = Infrastructure::quiet();
+let horizon = TimeFrame::Long;
+
+loop {
+    let threat = invert(&goal);
+    ship(build(threat.negate()));
 }`}
-            </CodeBlock>
+            </ManuscriptBlock>
 
-            <motion.p
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="mt-6 text-xl md:text-2xl font-medium text-gray-300"
-            >
-              Building the future with code | Living with purpose
-            </motion.p>
+            <p className="font-body text-lg text-cream/70 mt-8 max-w-2xl mx-auto leading-relaxed">
+              Quiet infrastructure. Long horizons. The shipping is the statement.
+            </p>
 
-            {/* Banner Social Links */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.7 }}
-              className="mt-8 flex justify-center space-x-6"
-            >
+            {/* Social Links */}
+            <div className="mt-10 flex justify-center gap-6">
               {[
                 { href: "https://github.com/akshay594", icon: Github, label: "GitHub" },
                 { href: "https://www.linkedin.com/in/theunblunt/", icon: Linkedin, label: "LinkedIn" },
                 { href: "https://www.youtube.com/@unblunttheory", icon: Youtube, label: "YouTube" },
-                { href: "https://www.instagram.com/unblunttheory/", icon: Instagram, label: "Instagram" },
                 { href: "https://x.com/unblunttheory", icon: Twitter, label: "Twitter" },
                 { href: "mailto:gopalsinghpanwar411@gmail.com", icon: Mail, label: "Email" }
               ].map(({ href, icon: Icon, label }) => (
-                <motion.a
+                <a
                   key={href}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.2, y: -3 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="relative group p-3 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-500/50 transition-all duration-300"
+                  className="p-3 border border-gold-muted/40 text-gold-muted hover:text-gold hover:border-gold transition-colors duration-300"
                   title={label}
                 >
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 blur opacity-0 group-hover:opacity-75 transition duration-300" />
-                  <Icon 
-                    size={24} 
-                    className="relative text-gray-400 group-hover:text-white transition-colors duration-300" 
-                  />
-                </motion.a>
+                  <Icon size={20} />
+                </a>
               ))}
-            </motion.div>
-          </motion.div>
-        </div>
-      </div>
-
-      <SectionDivider />
-
-      {/* Tech Stack Section */}
-      <section id="tech" className="relative py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="space-y-20"
-          >
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400">
-                Technical Expertise
-              </h2>
-              <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-                Building scalable solutions with modern technologies
-              </p>
-            </div>
-
-            <div className="space-y-24">
-              {/* Frontend Stack */}
-              <div>
-                <div className="mb-10">
-                  <motion.h3 
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    className="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400"
-                  >
-                    Frontend Stack
-                  </motion.h3>
-                  <p className="text-gray-400 text-lg">Crafting beautiful and responsive user interfaces</p>
-                </div>
-                <TechStack stack={techStacks.frontend} />
-              </div>
-
-              {/* Backend Stack */}
-              <div>
-                <div className="mb-10">
-                  <motion.h3 
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    className="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400"
-                  >
-                    Backend Stack
-                  </motion.h3>
-                  <p className="text-gray-400 text-lg">Building robust and scalable server architectures</p>
-                </div>
-                <TechStack stack={techStacks.backend} />
-              </div>
-
-              {/* AI Stack */}
-              <div>
-                <div className="mb-10">
-                  <motion.h3 
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    className="text-3xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400"
-                  >
-                    AI Stack
-                  </motion.h3>
-                  <p className="text-gray-400 text-lg">Implementing cutting-edge machine learning solutions</p>
-                </div>
-                <TechStack stack={techStacks.ai} />
-              </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      <SectionDivider />
+      <OrnateDivider />
 
-      {/* Fitness Section */}
-      <section id="fitness" className="relative py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-16"
-          >
-            <h2 className="text-3xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-orange-500">
-              Fitness & Wellness
-            </h2>
+      {/* Vision Section */}
+      <section className="max-w-4xl mx-auto px-4 py-16">
+        <ChapterHeader number="I" title="The Vision" />
+        
+        <VintageCard className="max-w-3xl mx-auto">
+          <p className="font-body text-cream/80 leading-relaxed text-lg mb-6">
+            Build infrastructure that outlasts its creator. Systems that compound while you sleep. 
+            Not the loudest in the room—the one still standing when the room is empty.
+          </p>
 
-            <GlowingBorder>
-              <div className="p-6">
-                <CodeBlock>
-                  {`// Physical & Mental Wellness Protocol
-const wellness = {
-  mindset: 'BALANCED',
-  routine: {
-    morning: ['5AM Workout', 'Cold Shower', 'Meditation'],
-    training: ['Power Lifting', 'Boxing', 'HIIT'],
-    recovery: ['Mobility Work', 'Ice Bath', 'Deep Tissue']
-  },
-  nutrition: {
-    protocol: 'High Protein + Clean Carbs',
-    supplements: ['Creatine', 'BCAAs', 'Fish Oil'],
-    hydration: '1 Gallon Daily'
-  },
-  goals: {
-    strength: 'Progressive Overload',
-    mindset: 'Consistent Growth',
-    balance: 'Body & Mind Harmony'
-  }
-};`}
-                </CodeBlock>
-
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
-                  {fitnessStats.map((stat, index) => (
-                    <GlowingBorder key={stat.name}>
-                      <div className="p-4 text-center">
-                        <h3 className="text-lg font-bold text-red-400">{stat.name}</h3>
-                        <p className="text-2xl font-bold mt-2 bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-orange-500">
-                          {stat.value}
-                        </p>
-                      </div>
-                    </GlowingBorder>
-                  ))}
-                </div>
+          <div className="border-t border-gold-muted/20 pt-6 mt-6">
+            <h4 className="font-display text-gold text-center mb-4">Operating Principles</h4>
+            <div className="grid md:grid-cols-3 gap-6 text-center">
+              <div>
+                <span className="font-display text-cream">Invert</span>
+                <p className="font-accent text-gold-muted text-sm italic mt-1">Avoid failure first</p>
               </div>
-            </GlowingBorder>
-          </motion.div>
+              <div>
+                <span className="font-display text-cream">Compound</span>
+                <p className="font-accent text-gold-muted text-sm italic mt-1">Long games only</p>
+              </div>
+              <div>
+                <span className="font-display text-cream">Ship</span>
+                <p className="font-accent text-gold-muted text-sm italic mt-1">The work speaks</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-gold-muted/20 pt-6 mt-6">
+            <p className="font-accent text-gold italic text-center">
+              "Quiet infrastructure over loud performance. Multi-threaded life not because 
+              I cannot focus—because no single thing controls me."
+            </p>
+          </div>
+        </VintageCard>
+      </section>
+
+      <OrnateDivider />
+
+      {/* Stack Section */}
+      <section className="max-w-6xl mx-auto px-4 py-16">
+        <ChapterHeader number="II" title="The Stack" />
+        
+        <p className="font-body text-center text-cream/60 mb-8 max-w-3xl mx-auto">
+          Infrastructure that compounds. Tools chosen not for novelty but for endurance. 
+          A decade of building systems that ship and stay shipped.
+        </p>
+
+        {/* Stats Row */}
+        <div className="flex justify-center gap-12 mb-12 border-y border-gold-muted/20 py-6">
+          <div className="text-center">
+            <span className="font-display text-2xl text-gold">9+</span>
+            <p className="font-accent text-xs text-cream/50 mt-1">Years Python/ML</p>
+          </div>
+          <div className="text-center">
+            <span className="font-display text-2xl text-gold">700+</span>
+            <p className="font-accent text-xs text-cream/50 mt-1">Production Prompts</p>
+          </div>
+          <div className="text-center">
+            <span className="font-display text-2xl text-gold">3+</span>
+            <p className="font-accent text-xs text-cream/50 mt-1">Years Rust</p>
+          </div>
+          <div className="text-center">
+            <span className="font-display text-2xl text-gold">∞</span>
+            <p className="font-accent text-xs text-cream/50 mt-1">Daily Commits</p>
+          </div>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-8">
+          <VintageCard>
+            <h3 className="font-display text-lg text-gold mb-2 text-center border-b border-gold-muted/20 pb-3">Infrastructure</h3>
+            <p className="font-accent text-xs text-center text-cream/40 italic mb-4">Systems that last</p>
+            {techStacks.infrastructure.map((tech) => (
+              <TechItem key={tech.name} {...tech} />
+            ))}
+          </VintageCard>
+
+          <VintageCard>
+            <h3 className="font-display text-lg text-gold mb-2 text-center border-b border-gold-muted/20 pb-3">AI & ML</h3>
+            <p className="font-accent text-xs text-center text-cream/40 italic mb-4">Intelligence at scale</p>
+            {techStacks.ai.map((tech) => (
+              <TechItem key={tech.name} {...tech} />
+            ))}
+          </VintageCard>
+
+          <VintageCard>
+            <h3 className="font-display text-lg text-gold mb-2 text-center border-b border-gold-muted/20 pb-3">Tools & Patterns</h3>
+            <p className="font-accent text-xs text-center text-cream/40 italic mb-4">The supporting cast</p>
+            {techStacks.tools.map((tech) => (
+              <TechItem key={tech.name} {...tech} />
+            ))}
+          </VintageCard>
         </div>
       </section>
 
-      <SectionDivider />
+      <OrnateDivider />
 
-      {/* Book Section */}
-      <section id="book" className="relative py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-16"
-          >
-            <h2 className="text-3xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">
-              The Compass and the Child
-            </h2>
+      {/* Philosophy Section */}
+      <section className="max-w-4xl mx-auto px-4 py-16">
+        <ChapterHeader number="III" title="The Philosophy" />
 
-            <GlowingBorder>
-              <div className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div>
-                    <h3 className="text-xl font-bold mb-4">Author's Note</h3>
-                    <p className="text-gray-300 mb-4">
-                      "The book you hold in your hands began with a question that has haunted me throughout my life:
-                      How does one find wisdom and purpose in a fragmented world that offers endless knowledge
-                      but little integration?"
-                    </p>
-                    <CodeBlock>
-                      {`// Philosophy as Code
-const consciousness = {
-  async *explore() {
-    while (true) {
-      const reality = await perceive();
-      const understanding = process(reality);
-      yield interpret(understanding);
-    }
-  },
+        <VintageCard className="max-w-2xl mx-auto">
+          <p className="font-body text-cream/80 leading-relaxed mb-6">
+            Advaita Vedanta as operating system. The self that watches the self. 
+            Eastern philosophy meeting Western rigor. Not spirituality as escape—as framework.
+          </p>
 
-  dimensions: {
-    physical: 'Quantum Mechanics',
-    mental: 'Neural Correlates',
-    spiritual: 'Transcendental States'
-  },
-
-  insights: [
-    'Reality is computation',
-    'Consciousness is information',
-    'Truth is convergent'
-  ]
-};`}
-                    </CodeBlock>
-                  </div>
-
-                  <div className="space-y-6">
-                    <GlowingBorder>
-                      <div className="p-4">
-                        <h3 className="text-xl font-bold mb-4">Core Themes</h3>
-                        <ul className="space-y-3 text-gray-300">
-                          <li>• Integration of Eastern and Western philosophy</li>
-                          <li>• Consciousness exploration through technology</li>
-                          <li>• Finding purpose in a fragmented world</li>
-                          <li>• The intersection of computation and consciousness</li>
-                          <li>• Practical wisdom for modern life</li>
-                          <li>• The journey from knowledge to understanding</li>
-                        </ul>
-                      </div>
-                    </GlowingBorder>
-
-                    <GlowingBorder>
-                      <div className="p-4">
-                        <h3 className="text-xl font-bold mb-4">Key Chapters</h3>
-                        <ul className="space-y-3 text-gray-300">
-                          <li>• The Child's Universe: Foundations of Wisdom</li>
-                          <li>• The Cynic's Barrel: Freedom through Simplicity</li>
-                          <li>• The Stoic's School: Inner Freedom</li>
-                          <li>• The Master's Garden: Relational Harmony</li>
-                          <li>• The Questioner's Agora: Examined Life</li>
-                          <li>• The Philosopher's Cave: Beyond Appearances</li>
-                        </ul>
-                      </div>
-                    </GlowingBorder>
-                  </div>
-                </div>
-              </div>
-            </GlowingBorder>
-          </motion.div>
-        </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 text-center">
+            <div>
+              <span className="font-display text-cream text-sm">Sakshi</span>
+              <p className="font-accent text-gold-muted text-xs italic">The witness</p>
+            </div>
+            <div>
+              <span className="font-display text-cream text-sm">Viveka</span>
+              <p className="font-accent text-gold-muted text-xs italic">Discernment</p>
+            </div>
+            <div>
+              <span className="font-display text-cream text-sm">Neti Neti</span>
+              <p className="font-accent text-gold-muted text-xs italic">Not this, not that</p>
+            </div>
+            <div>
+              <span className="font-display text-cream text-sm">Turiya</span>
+              <p className="font-accent text-gold-muted text-xs italic">The fourth state</p>
+            </div>
+          </div>
+        </VintageCard>
       </section>
 
-      {/* Floating Navigation Dots */}
-      <nav className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 hidden lg:block">
-        <ul className="space-y-6">
-          {[
-            { id: 'hero', label: 'Introduction' },
-            { id: 'tech', label: 'Tech Stack' },
-            { id: 'fitness', label: 'Fitness' },
-            { id: 'book', label: 'Book' }
-          ].map(({ id, label }) => (
-            <motion.li
-              key={id}
-              className="relative group"
-              whileHover={{ scale: 1.2 }}
-            >
-              <button
-                onClick={() => {
-                  const element = document.getElementById(id);
-                  if (element) {
-                    const headerOffset = 80; // Account for fixed header
-                    const elementPosition = element.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    
-                    window.scrollTo({
-                      top: offsetPosition,
-                      behavior: 'smooth'
-                    });
-                  }
-                }}
-                className="block w-3 h-3 rounded-full bg-white/20 group-hover:bg-purple-500 transition-colors duration-300"
-              />
-              <span className="absolute left-0 transform -translate-x-full -translate-y-1/2 top-1/2 mr-4 px-2 py-1 bg-black/80 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                {label}
-              </span>
-            </motion.li>
-          ))}
-        </ul>
-      </nav>
+      <OrnateDivider />
 
+      {/* Training Section */}
+      <section className="max-w-4xl mx-auto px-4 py-16">
+        <ChapterHeader number="IV" title="The Training" />
+
+        <VintageCard className="max-w-2xl mx-auto">
+          <p className="font-body text-cream/80 leading-relaxed mb-6">
+            The body and the codebase are the same project. Not separate from the work. 
+            The same discipline in a different medium. Heavy lifting. Daily running. HYROX preparation.
+          </p>
+
+          <ManuscriptBlock>
+{`loop {
+    lift(Heavy);
+    run(Daily);
+    prepare(HYROX);
+}`}
+          </ManuscriptBlock>
+
+          <div className="grid grid-cols-3 gap-4 mt-8 text-center">
+            <div className="border-r border-gold-muted/20 last:border-r-0">
+              <span className="font-display text-cream">Running</span>
+              <p className="font-accent text-gold text-sm italic">Daily</p>
+            </div>
+            <div className="border-r border-gold-muted/20 last:border-r-0">
+              <span className="font-display text-cream">Lifting</span>
+              <p className="font-accent text-gold text-sm italic">Heavy</p>
+            </div>
+            <div>
+              <span className="font-display text-cream">HYROX</span>
+              <p className="font-accent text-gold text-sm italic">Prep</p>
+            </div>
+          </div>
+        </VintageCard>
+      </section>
+
+      <OrnateDivider />
+
+      {/* Footer */}
+      <footer className="max-w-4xl mx-auto px-4 py-16 text-center">
+        <p className="font-body text-cream/50 text-sm mb-4">
+          I do not write to be liked. But if you get it, you get it.
+        </p>
+        <p className="font-accent text-gold-muted italic text-sm">
+          Jaipur · Athens · Wherever the work requires
+        </p>
+      </footer>
     </div>
   );
 };
