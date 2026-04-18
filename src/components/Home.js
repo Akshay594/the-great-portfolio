@@ -172,7 +172,7 @@ const Home = () => {
             </h1>
 
             <p className="font-accent text-xl md:text-2xl text-gold italic mb-8">
-              A Rust-writing Vedantin from Jaipur
+              A Rust-writing Vedantin
             </p>
 
             <ManuscriptBlock>
@@ -389,7 +389,7 @@ loop {
           I do not write to be liked. But if you get it, you get it.
         </p>
         <p className="font-accent text-gold-muted italic text-sm">
-          Jaipur · Athens · Wherever the work requires
+          Wherever the work requires
         </p>
       </footer>
     </div>

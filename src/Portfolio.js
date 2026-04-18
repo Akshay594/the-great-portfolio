@@ -40,7 +40,7 @@ const Portfolio = () => {
             alt="Gopal Singh"
           />
           <h1 className="text-5xl font-bold mt-4">Gopal Singh</h1>
-          <p className="text-xl text-gray-400 mt-2">theunblunt | Rust | AI Infrastructure | Jaipur</p>
+          <p className="text-xl text-gray-400 mt-2">theunblunt | Rust | AI Infrastructure</p>
           <p className="text-md text-gray-400 mt-2">
             Quiet infrastructure. Long horizons. The shipping is the statement.
           </p>
