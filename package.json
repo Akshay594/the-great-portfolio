@@ -1,33 +1,22 @@
 {
-  "name": "my-portfolio",
+  "name": "theunblunt",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@tailwindcss/typography": "^0.5.15",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.7.7",
-    "framer-motion": "^11.9.0",
     "lucide-react": "^0.439.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-helmet": "^6.1.0",
-    "react-markdown": "^9.0.1",
     "react-router-dom": "^6.26.2",
-    "react-scripts": "5.0.1",
-    "react-syntax-highlighter": "^15.5.0",
-    "react-tsparticles": "^2.12.2",
-    "recharts": "^2.12.7",
-    "shadcn-ui": "^0.9.2",
-    "tsparticles-slim": "^2.12.0",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && node scripts/prerender.js",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "preview": "npx --yes serve@14 build -l 4173"
   },
   "eslintConfig": {
     "extends": [
@@ -50,6 +39,7 @@
   "devDependencies": {
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.45",
+    "sucrase": "^3.35.0",
     "tailwindcss": "^3.4.10"
   }
 }

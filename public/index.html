@@ -1,54 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Character set -->
     <meta charset="utf-8" />
-
-    <!-- Viewport settings for responsive design -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- SEO meta tags -->
-    <meta name="description" content="Gopal Singh - AI Architect & NLP Specialist Portfolio" />
-    <meta name="keywords" content="Gopal Singh, AI, NLP, Machine Learning, Portfolio, JaanchAI, AI Architect, Data Science" />
+    <meta name="theme-color" content="#F7F7F4" />
     <meta name="author" content="Gopal Singh" />
-    
-    <!-- Theme color for mobile browsers -->
-    <meta name="theme-color" content="#1F2937" /> <!-- Dark gray color for sleek design -->
 
-    <!-- Favicon and Icons -->
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-
-    <!-- Manifest for Progressive Web App settings -->
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="%PUBLIC_URL%/logo192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="preload" href="%PUBLIC_URL%/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
 
-    <!-- Open Graph meta tags for better social media sharing -->
-    <meta property="og:title" content="Gopal Singh - AI Architect Portfolio" />
-    <meta property="og:description" content="Showcasing AI, NLP, and Machine Learning expertise of Gopal Singh." />
-    <meta property="og:image" content="%PUBLIC_URL%/profile-image.png" />
-    <meta property="og:url" content="https://gopalsingh.ai" />
+    <style>
+      @font-face { font-family: 'Geist'; font-style: normal; font-weight: 400 600; font-display: swap; src: url('%PUBLIC_URL%/fonts/geist-latin.woff2') format('woff2'); }
+      @font-face { font-family: 'Geist Mono'; font-style: normal; font-weight: 400 500; font-display: swap; src: url('%PUBLIC_URL%/fonts/geist-mono-latin.woff2') format('woff2'); }
+    </style>
+
+    <!-- Per-page tags below are replaced for each route by scripts/prerender.js. -->
+    <title>Gopal Singh | Founder, Engineer &amp; AI Researcher</title>
+    <meta name="description" content="Gopal Singh (theunblunt) builds AI products and infrastructure, including Metriqual and Motionqual, and co-authors research on transformer memory, representation geometry and LLM serving reliability." />
+    <link rel="canonical" href="https://theunblunt.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="theunblunt" />
+    <meta property="og:title" content="Gopal Singh | Founder, Engineer &amp; AI Researcher" />
+    <meta property="og:description" content="Gopal Singh (theunblunt) builds AI products and infrastructure, including Metriqual and Motionqual, and co-authors research on transformer memory, representation geometry and LLM serving reliability." />
+    <meta property="og:url" content="https://theunblunt.com/" />
+    <meta property="og:image" content="https://theunblunt.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Gopal Singh. Founder, engineer and AI researcher." />
     <meta name="twitter:card" content="summary_large_image" />
-
-    <!-- Import Google Fonts for typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
-
-    <!-- Import custom fonts or external CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
-
-    <!-- Analytics (optional) -->
-    <!-- Insert Google Analytics or other tracking code here -->
-
-    <!-- Title of the webpage -->
-    <title>Gopal Singh | AI Architect & NLP Specialist</title>
+    <meta name="twitter:title" content="Gopal Singh | Founder, Engineer &amp; AI Researcher" />
+    <meta name="twitter:description" content="Gopal Singh (theunblunt) builds AI products and infrastructure, including Metriqual and Motionqual, and co-authors research on transformer memory, representation geometry and LLM serving reliability." />
+    <meta name="twitter:image" content="https://theunblunt.com/og-image.png" />
   </head>
-
-  <body class="font-inter bg-gray-900 text-white">
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-
-    <!-- Root div where React renders the app -->
+  <body>
     <div id="root"></div>
-
-    <!-- Add any additional scripts here -->
-    
   </body>
 </html>
